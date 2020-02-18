@@ -5,4 +5,4 @@ import sys
 from src.cli import Cli
 
 class CliTest(unittest.TestCase):
-    
+    pass
