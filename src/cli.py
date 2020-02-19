@@ -1,5 +1,5 @@
 class Cli():
-
+  
     def log(self, message, writer=print):
         if isinstance(message, list):
             self.log_messages(message, writer)
@@ -14,4 +14,7 @@ class Cli():
             writer(messages[message])
     
     def welcome(self):
-        print_message("Hi! Welcome to Tic-Tac-Toe by Toenails Inc!")
+        log("Hi! Welcome to Tic-Tac-Toe by Toenails Inc!")
+        
+    def goodbye(self):
+        log("You played a great game! See you next time!")
