@@ -1,14 +1,20 @@
 class Board:
-    def __init__(self):
-        self.board = [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "]
+    border = "⊱ –––––– {⋆⌘⋆} –––––– ⊰",
+    divider = "      ---+---+---"
 
-    def display_board(self):
-        print("⊱ –––––– {⋆⌘⋆} –––––– ⊰")
-        print()
-        print(f"       {self.board[0]} | {self.board[1]} | {self.board[2]} ")
-        print("      ---+---+---")
-        print(f"       {self.board[3]} | {self.board[4]} | {self.board[5]} ")
-        print("      ---+---+---")
-        print(f"       {self.board[6]} | {self.board[7]} | {self.board[8]} ")
-        print()
-        print("⊱ –––––– {⋆⌘⋆} –––––– ⊰")
+    def __init__(self):
+        self.spaces = [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "]
+
+    def stringify_spaces(self):
+        return [
+            #Board.border,
+            "",
+            f"       {self.spaces[0]} | {self.spaces[1]} | {self.spaces[2]} ",
+            Board.divider,
+            f"       {self.spaces[3]} | {self.spaces[4]} | {self.spaces[5]} ", 
+            Board.divider,
+            f"       {self.spaces[6]} | {self.spaces[7]} | {self.spaces[8]} ",
+            "",
+            #Board.border 
+        ]
+    
