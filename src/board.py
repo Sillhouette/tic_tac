@@ -1,9 +1,10 @@
 class Board:
     border = "⊱ –––––– {⋆⌘⋆} –––––– ⊰",
     divider = "      ---+---+---"
-
+    space = " "
+    
     def __init__(self):
-        self.spaces = [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "]
+        self.spaces = [Board.space] * 9
 
     def stringify_spaces(self):
         return [
@@ -19,4 +20,4 @@ class Board:
         ]
     
     def full(self):
-        return not " " in self.spaces
+        return not Board.space in self.spaces
