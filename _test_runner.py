@@ -2,11 +2,13 @@ import unittest
 
 from test.cli_test import CliTest
 from test.board_test import BoardTest
+from test.player_test import PlayerTest
 
 def suite():
     suite = unittest.TestSuite()
     suite.addTests(unittest.TestLoader().loadTestsFromTestCase(CliTest))
     suite.addTests(unittest.TestLoader().loadTestsFromTestCase(BoardTest))
+    suite.addTests(unittest.TestLoader().loadTestsFromTestCase(PlayerTest))
     return suite
 
 if __name__ == '__main__':
