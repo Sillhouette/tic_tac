@@ -30,8 +30,7 @@ class Game():
         self.cli.log(self.board.stringify_spaces())
        
     def input_to_index(self, user_input):
-        input_int = int(user_input)
-        return input_int - 1 
+        return int(user_input) - 1 
 
     def current_player(self):
         if self.board.turn_count() % 2 == 0:
