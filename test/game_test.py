@@ -24,7 +24,7 @@ class GameTest(unittest.TestCase):
 
     def test_current_player(self):
         game = Game()
-        expected = game.player_1
+        expected = game.players[0]
 
         actual = game.current_player()
 
@@ -33,7 +33,7 @@ class GameTest(unittest.TestCase):
     def test_current_player_2(self):
         game = Game()
         game.board.spaces[0] = "X"
-        expected = game.player_2
+        expected = game.players[1]
 
         actual = game.current_player()
 
