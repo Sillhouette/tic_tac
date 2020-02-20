@@ -1,8 +1,9 @@
 class Board:
+    SIZE = 9
     border = "⊱ –––––– {⋆⌘⋆} –––––– ⊰",
     divider = "      ---+---+---"
     space = " "
-    
+        
     def __init__(self):
         self.spaces = [Board.space] * 9
 
@@ -26,4 +27,4 @@ class Board:
         self.spaces[index] = token
 
     def turn_count(self):
-        return 9 - self.spaces.count(Board.space)
+        return Board.SIZE - self.spaces.count(Board.space)
