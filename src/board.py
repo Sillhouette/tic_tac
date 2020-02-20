@@ -21,3 +21,9 @@ class Board:
     
     def full(self):
         return not Board.space in self.spaces
+
+    def update(self, index, token):
+        self.spaces[index] = token
+
+    def turn_count(self):
+        return 9 - self.spaces.count(Board.space)
