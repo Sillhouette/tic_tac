@@ -1,7 +1,8 @@
 class Cli():
     
-    def __init__(self, writer=print):
+    def __init__(self, writer=print, reader=input):
         self.writer = writer
+        self.reader = reader
 
     def log(self, message):
         if isinstance(message, list):
@@ -16,8 +17,11 @@ class Cli():
         for message in range(len(messages)):
             self.writer(messages[message])
     
+    def prompt_user(self, message=""):
+        return self.reader(message)
+
     def welcome(self):
-        log("Hi! Welcome to Tic-Tac-Toe by Toenails Inc!")
+        self.log("Hi! Welcome to Tic-Tac-Toe by Toenails Inc!")
         
     def goodbye(self):
-        log("You played a great game! See you next time!")
+        self.log("You played a great game! See you next time!")
