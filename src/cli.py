@@ -1,17 +1,20 @@
 class Cli():
-  
-    def log(self, message, writer=print):
+    
+    def __init__(self, writer=print):
+        self.writer = writer
+
+    def log(self, message):
         if isinstance(message, list):
-            self.log_messages(message, writer)
+            self.log_messages(message)
         else:
-            self.log_message(message, writer)
+            self.log_message(message)
 
-    def log_message(self, message, writer=print):
-        writer(message)
+    def log_message(self, message):
+        self.writer(message)
 
-    def log_messages(self, messages, writer=print):
+    def log_messages(self, messages):
         for message in range(len(messages)):
-            writer(messages[message])
+            self.writer(messages[message])
     
     def welcome(self):
         log("Hi! Welcome to Tic-Tac-Toe by Toenails Inc!")
