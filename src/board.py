@@ -18,3 +18,5 @@ class Board:
             #Board.border 
         ]
     
+    def full(self):
+        return not " " in self.spaces

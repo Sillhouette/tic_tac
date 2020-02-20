@@ -35,3 +35,17 @@ class BoardTest(unittest.TestCase):
         ]
 
         self.assertEqual(expected, board.stringify_spaces())
+
+    def test_full_board(self):
+        board = Board()
+
+        board.spaces = ["X", "O", "X", "O", "O", "X", "O", "O", "X"]
+        
+        self.assertEqual(board.full(), True)
+
+    def test_not_full_board(self):
+        board = Board()
+
+        board.spaces = ["X", "O", " ", "O", "X", " ", " ", "O", "X"]
+
+        self.assertEqual(board.full(), False)
