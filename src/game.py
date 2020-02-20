@@ -4,12 +4,10 @@ from src.player import Player
 
 class Game():
 
-    def __init__(self, cli=Cli(), board=Board(), player_1=Player(token="X"),
-                 player_2=Player(token="O")):
+    def __init__(self, cli=Cli(), board=Board(), players=[Player(), Player()]):
         self.cli = cli
         self.board = board
-        self.player_1 = player_1
-        self.player_2 = player_2
+        self.players = players
 
     def start(self):
         self.cli.welcome()
@@ -33,8 +31,6 @@ class Game():
         return int(user_input) - 1 
 
     def current_player(self):
-        if self.board.turn_count() % 2 == 0:
-            return self.player_1
-        else:
-            return self.player_2
+        num_players = len(self.players)
+        return self.players[self.board.turn_count() % num_players]
 
