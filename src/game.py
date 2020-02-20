@@ -24,13 +24,14 @@ class Game():
     
     def turn(self):
         player_choice = self.cli.prompt_user()
-        move = self.input_to_index(int(player_choice))
+        move = self.input_to_index(player_choice)
 
         self.board.update(move, self.current_player().token)
         self.cli.log(self.board.stringify_spaces())
        
     def input_to_index(self, user_input):
-        return user_input - 1 
+        input_int = int(user_input)
+        return input_int - 1 
 
     def current_player(self):
         if self.board.turn_count() % 2 == 0:
