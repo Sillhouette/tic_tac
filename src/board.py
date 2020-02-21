@@ -20,5 +20,5 @@ class Board:
         return self.spaces[position] != None
 
     def within_board(self, position):
-        result = position >= 0 and position <= Board.SIZE
+        result = position >= 0 and position < Board.SIZE
         return result
