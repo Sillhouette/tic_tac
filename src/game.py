@@ -15,7 +15,7 @@ class Game():
         self.play()
 
     def play(self):
-        self.cli.log(self.board.stringify_spaces())
+        self.cli.display_board(self.board)
         while not self.board.full():
             self.turn()
 
@@ -26,7 +26,7 @@ class Game():
         move = self.input_to_index(player_choice)
 
         self.board.update(move, self.current_player().token)
-        self.cli.log(self.board.stringify_spaces())
+        self.cli.display_board(self.board)
        
     def input_to_index(self, user_input):
         return int(user_input) - 1 

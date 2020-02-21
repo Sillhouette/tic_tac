@@ -2,6 +2,7 @@ import unittest
 
 from unittest.mock import call, Mock
 from src.cli import Cli
+from src.board import Board
 
 class CliTest(unittest.TestCase):
     def test_log_message(self):
@@ -44,3 +45,44 @@ class CliTest(unittest.TestCase):
         
         mock.assert_called_once_with(args)
         self.assertEqual(expected, actual)
+
+    def test_display_empty_board(self):
+        board = Board()
+        mock = Mock()
+        cli = Cli(mock)
+
+        expected =  """
+⊱ –––––– {⋆⌘⋆} –––––– ⊰
+
+         |   |   
+      ---+---+---
+         |   |   
+      ---+---+---
+         |   |   
+
+⊱ –––––– {⋆⌘⋆} –––––– ⊰
+"""
+
+        self.assertEqual(expected, cli.display_board(board))
+
+    def test_display_board_in_progress(self):
+        board = Board()
+        mock = Mock()
+        cli = Cli(mock)
+        board.spaces = ["X", " ", " ", "O", " ", "X", " ", " ", "O"]
+       
+        expected = """
+⊱ –––––– {⋆⌘⋆} –––––– ⊰
+
+       X |   |   
+      ---+---+---
+       O |   | X 
+      ---+---+---
+         |   | O 
+
+⊱ –––––– {⋆⌘⋆} –––––– ⊰
+"""
+
+        self.assertEqual(expected, cli.display_board(board))
+
+
