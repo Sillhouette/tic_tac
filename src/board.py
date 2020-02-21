@@ -1,6 +1,5 @@
 class Board:
     SIZE = 9
-    border = "⊱ –––––– {⋆⌘⋆} –––––– ⊰",
     space = " "
 
     def __init__(self):
