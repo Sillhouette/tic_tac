@@ -12,3 +12,13 @@ class Board:
 
     def turn_count(self):
         return Board.SIZE - self.spaces.count(None)
+
+    def valid_move(self, position):
+        return self.within_board(position) and not self.position_taken(position)
+
+    def position_taken(self, position):
+        return self.spaces[position] != None
+
+    def within_board(self, position):
+        result = position >= 0 and position <= Board.SIZE
+        return result
