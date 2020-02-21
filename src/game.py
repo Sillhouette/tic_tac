@@ -22,7 +22,7 @@ class Game():
         self.cli.goodbye()
     
     def turn(self):
-        player_choice = self.cli.prompt_user()
+        player_choice = self.cli.prompt_player_turn(self.current_player())
         move = self.input_to_index(player_choice)
 
         self.board.update(move, self.current_player().token)
