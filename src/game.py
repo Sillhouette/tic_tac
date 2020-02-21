@@ -4,7 +4,8 @@ from src.player import Player
 
 class Game():
 
-    def __init__(self, cli=Cli(), board=Board(), players=[Player(), Player()]):
+    def __init__(self, cli=Cli(), board=Board(), players=[Player(token="X"),
+                                                          Player(token="O")]):
         self.cli = cli
         self.board = board
         self.players = players
