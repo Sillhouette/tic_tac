@@ -50,3 +50,8 @@ class Cli():
 """
         self.log(board_string)
         return board_string
+
+    def invalid_move(self):
+        error = "\nI'm sorry, it seems you may have accidently made an invalid move, can you please try another position?\n"
+        self.log(error)
+

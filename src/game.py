@@ -21,12 +21,16 @@ class Game():
 
         self.cli.goodbye()
     
-    def turn(self):
+    def turn(self, error=False):
+        if error: self.cli.invalid_move()
+
         player_choice = self.cli.prompt_player_turn(self.current_player())
         move = self.input_to_index(player_choice)
-
-        self.board.update(move, self.current_player().token)
-        self.cli.display_board(self.board)
+        if self.board.valid_move(move):
+            self.board.update(move, self.current_player().token)
+            self.cli.display_board(self.board)
+        else:
+            self.turn(True)
        
     def input_to_index(self, user_input):
         return int(user_input) - 1 
