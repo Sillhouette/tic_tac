@@ -1,6 +1,7 @@
-from src.board import Board
+from src.game import Game
 
-board = Board()
-board.board = ["X", " ", " ", "O", "X", "O", " ", " ", " "]
-board.display_board()
+game = Game()
+
+game.start()
+
 
