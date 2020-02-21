@@ -47,34 +47,40 @@ class CliTest(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     def test_display_empty_board(self):
-       board = Board()
-       cli = Cli()
+        board = Board()
+        mock = Mock()
+        cli = Cli(mock)
 
-       expected =  """\
+        expected =  """
+⊱ –––––– {⋆⌘⋆} –––––– ⊰
 
          |   |   
       ---+---+---
          |   |   
       ---+---+---
          |   |   
-\
+
+⊱ –––––– {⋆⌘⋆} –––––– ⊰
 """
 
-       self.assertEqual(expected, cli.display_board(board))
+        self.assertEqual(expected, cli.display_board(board))
 
     def test_display_board_in_progress(self):
         board = Board()
-        cli = Cli()
+        mock = Mock()
+        cli = Cli(mock)
         board.spaces = ["X", " ", " ", "O", " ", "X", " ", " ", "O"]
        
-        expected = """\
+        expected = """
+⊱ –––––– {⋆⌘⋆} –––––– ⊰
 
        X |   |   
       ---+---+---
        O |   | X 
       ---+---+---
          |   | O 
-\
+
+⊱ –––––– {⋆⌘⋆} –––––– ⊰
 """
 
         self.assertEqual(expected, cli.display_board(board))
