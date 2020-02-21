@@ -30,21 +30,4 @@ class Cli():
          turn_prompt = f"It's {player.token}'s turn! Please select a square using 1-9:\n"
          player_input = self.prompt_user(turn_prompt)
          return player_input
-   
-    def display_board(self, board):
-        border = "⊱ –––––– {⋆⌘⋆} –––––– ⊰"
-        divider = "      ---+---+---"
-        board = f"""
-{border}
-
-       {board.spaces[0]} | {board.spaces[1]} | {board.spaces[2]} 
-{divider}
-       {board.spaces[3]} | {board.spaces[4]} | {board.spaces[5]} 
-{divider}
-       {board.spaces[6]} | {board.spaces[7]} | {board.spaces[8]} 
-
-{border}
-"""
-        self.log(board)
-        return board
 
