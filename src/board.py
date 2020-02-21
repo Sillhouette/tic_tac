@@ -3,7 +3,7 @@ class Board:
     border = "⊱ –––––– {⋆⌘⋆} –––––– ⊰",
     divider = "      ---+---+---"
     space = " "
-        
+
     def __init__(self):
         self.spaces = [Board.space] * 9
 
