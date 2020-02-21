@@ -22,8 +22,7 @@ class Game():
         self.cli.goodbye()
     
     def turn(self):
-        turn_prompt = f"It's {self.current_player().token}'s turn! Please select a square using 1-9:\n"
-        player_choice = self.cli.prompt_user(turn_prompt)
+        player_choice = self.cli.prompt_player_turn(self.current_player())
         move = self.input_to_index(player_choice)
 
         self.board.update(move, self.current_player().token)
