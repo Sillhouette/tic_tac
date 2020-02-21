@@ -14,13 +14,13 @@ class BoardTest(unittest.TestCase):
     def test_not_full_board(self):
         board = Board()
 
-        board.spaces = ["X", "O", " ", "O", "X", " ", " ", "O", "X"]
+        board.spaces = ["X", "O", None, "O", "X", None, None, "O", "X"]
 
         self.assertEqual(board.full(), False)
 
     def test_update_board(self):
         board = Board()
-        expected = [" ", "X", " ", " ", " ", " ", " ", " ", " "]
+        expected = [None, "X", None, None, None, None, None, None, None]
 
         board.update(1, "X")
         actual = board.spaces
@@ -30,7 +30,7 @@ class BoardTest(unittest.TestCase):
 
     def test_update_board_2(self):
         board = Board()
-        expected = [" ", " ", " ", " ", " ", "O", " ", " ", " "]
+        expected = [None, None, None, None, None, "O", None, None, None]
 
         board.update(5, "O")
         actual = board.spaces

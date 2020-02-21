@@ -29,17 +29,20 @@ class Cli():
     def display_board(self, board):
         border = "⊱ –––––– {⋆⌘⋆} –––––– ⊰"
         divider = "      ---+---+---"
-        board = f"""
+        scrubbed_board = [token if token != None else " " for token in
+                          board.spaces]
+
+        board_string = f"""
 {border}
 
-       {board.spaces[0]} | {board.spaces[1]} | {board.spaces[2]} 
+       {scrubbed_board[0]} | {scrubbed_board[1]} | {scrubbed_board[2]} 
 {divider}
-       {board.spaces[3]} | {board.spaces[4]} | {board.spaces[5]} 
+       {scrubbed_board[3]} | {scrubbed_board[4]} | {scrubbed_board[5]} 
 {divider}
-       {board.spaces[6]} | {board.spaces[7]} | {board.spaces[8]} 
+       {scrubbed_board[6]} | {scrubbed_board[7]} | {scrubbed_board[8]} 
 
 {border}
 """
-        self.log(board)
-        return board
+        self.log(board_string)
+        return board_string
 
