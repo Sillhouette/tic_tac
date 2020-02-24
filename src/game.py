@@ -33,14 +33,13 @@ class Game():
     def game_is_over(self):
         return self.exit or self.safe_exit or self.board.full()
 
-    def turn(self, error=False, chances=1):
-        if error: self.cli.invalid_move()
-        
+    def turn(self, chances=1):
         if chances >= 5:
             self.safe_exit = True
             return
             
         player_choice = self.cli.prompt_player_turn(self.current_player())
+        
         if player_choice == None:
             self.safe_exit = True
         elif player_choice.lower() == "exit":
@@ -51,7 +50,8 @@ class Game():
                 self.board.update(move, self.current_player().token)
                 self.cli.display_board(self.board)
             else:
-                self.turn(True, chances + 1)
+                self.cli.invalid_move()
+                self.turn(chances + 1)
        
     def input_to_index(self, user_input):
         return int(user_input) - 1 
