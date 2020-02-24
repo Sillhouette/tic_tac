@@ -20,19 +20,18 @@ class Game():
         self.cli.display_board(self.board)
         while not self.game_is_over():
             self.turn()
+        self.handle_exit()
 
-    def game_is_over(self):
+    def handle_exit(self):
         if self.exit:
             self.cli.handle_exit()
-            return True
-        elif self.board.full():
-            self.cli.goodbye()
-            return True
         elif self.safe_exit:
             self.cli.handle_safe_exit()
-            return True
         else:
-            return False
+            self.cli.goodbye()
+        
+    def game_is_over(self):
+        return self.exit or self.safe_exit or self.board.full()
 
     def turn(self, error=False, chances=1):
         if error: self.cli.invalid_move()
