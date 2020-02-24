@@ -26,7 +26,7 @@ class CliTest(unittest.TestCase):
 
     def test_prompt_user(self):
         mock = Mock()
-        expected = "A user's input"
+        expected = "1"
         mock.return_value = expected
         cli = Cli(reader=mock)
         
@@ -36,7 +36,7 @@ class CliTest(unittest.TestCase):
 
     def test_prompt_user_2(self):
         mock = Mock()
-        expected = "Another user's input"
+        expected = "9"
         args = "Some prompt"
         mock.return_value = expected
         cli = Cli(reader=mock)
@@ -44,6 +44,27 @@ class CliTest(unittest.TestCase):
         actual = cli.prompt_user(args)
         
         mock.assert_called_once_with(args)
+        self.assertEqual(expected, actual)
+
+    def test_non_numeric_input(self):
+        reader_mock = Mock()
+        reader_mock.side_effect = ["invalid input", "1"]
+        expected_args = "It seems you may have entered some invalid input. Please try again:\n"
+        expected_return = "1"
+        cli = Cli(reader=reader_mock)
+
+        actual = cli.prompt_user()
+
+        reader_mock.assert_called_with(expected_args)
+        self.assertEqual(expected_return, actual)
+
+    def test_validate_input(self):
+        args = "invalid input"
+        expected = False
+        cli = Cli()
+
+        actual = cli.validate_input(args)
+
         self.assertEqual(expected, actual)
 
     def test_display_empty_board(self):
@@ -85,4 +106,11 @@ class CliTest(unittest.TestCase):
 
         self.assertEqual(expected, cli.display_board(board))
 
+    def test_handle_exit(self):
+        mock = Mock()
+        cli = Cli(writer=mock)
+        expected = "Leaving so soon? Hope to see you back again shortly!"
 
+        cli.handle_exit()
+
+        mock.assert_called_with(expected)
