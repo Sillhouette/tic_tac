@@ -17,7 +17,7 @@ class Cli():
         for message in range(len(messages)):
             self.writer(messages[message])
     
-    def prompt_user(self, message="", chances=0):
+    def prompt_user(self, message="", chances=1):
         user_input = self.reader(message)
         error_message = "It seems you may have entered some invalid input. Please try again:\n"
         
@@ -34,7 +34,7 @@ class Cli():
         return user_input in valid_input 
 
     def welcome(self):
-        self.log("Hi! Welcome to Tic-Tac-Toe by Toenails Inc!")
+        self.log("Hi! Welcome to Tic-Tac by Toenails Inc!")
         
     def goodbye(self):
         self.log("You played a great game! See you next time!")
