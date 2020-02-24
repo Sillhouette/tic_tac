@@ -70,7 +70,7 @@ class CliTest(unittest.TestCase):
     def test_input_recursion(self):
         reader_mock = Mock()
         reader_mock.side_effect = ["invalid input"] * 15
-        expected = 6
+        expected = 5
         expected_return = None
         cli = Cli(reader=reader_mock)
 
