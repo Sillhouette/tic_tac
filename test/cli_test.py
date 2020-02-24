@@ -66,6 +66,19 @@ class CliTest(unittest.TestCase):
         actual = cli.validate_input(args)
 
         self.assertEqual(expected, actual)
+   
+    def test_input_recursion(self):
+        reader_mock = Mock()
+        reader_mock.side_effect = ["invalid input"] * 15
+        expected = 6
+        expected_return = None
+        cli = Cli(reader=reader_mock)
+
+        actual_return = cli.prompt_user()
+        actual = reader_mock.call_count
+
+        self.assertEqual(expected, actual)
+        self.assertEqual(expected_return, actual_return)
 
     def test_display_empty_board(self):
         board = Board()
