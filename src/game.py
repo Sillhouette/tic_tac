@@ -10,6 +10,7 @@ class Game():
         self.board = board
         self.players = players
         self.exit = False
+        self.safe_exit = False
 
     def start(self):
         self.cli.welcome()
@@ -27,14 +28,23 @@ class Game():
         elif self.board.full():
             self.cli.goodbye()
             return True
+        elif self.safe_exit:
+            self.cli.handle_safe_exit()
+            return True
         else:
             return False
-    
-    def turn(self, error=False):
-        if error: self.cli.invalid_move()
 
+    def turn(self, error=False, chances=1):
+        if error: self.cli.invalid_move()
+        
+        if chances >= 5:
+            self.safe_exit = True
+            return
+            
         player_choice = self.cli.prompt_player_turn(self.current_player())
-        if player_choice.lower() == "exit":
+        if player_choice == None:
+            self.safe_exit = True
+        elif player_choice.lower() == "exit":
             self.exit = True
         else:
             move = self.input_to_index(player_choice)
@@ -42,7 +52,7 @@ class Game():
                 self.board.update(move, self.current_player().token)
                 self.cli.display_board(self.board)
             else:
-                self.turn(True)
+                self.turn(True, chances + 1)
        
     def input_to_index(self, user_input):
         return int(user_input) - 1 

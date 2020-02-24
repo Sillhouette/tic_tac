@@ -17,13 +17,17 @@ class Cli():
         for message in range(len(messages)):
             self.writer(messages[message])
     
-    def prompt_user(self, message=""):
+    def prompt_user(self, message="", chances=0):
         user_input = self.reader(message)
         error_message = "It seems you may have entered some invalid input. Please try again:\n"
+        
+        if chances >= 5:
+            return
+        
         if self.validate_input(user_input):
             return user_input
         else:
-            return self.prompt_user(error_message)
+            return self.prompt_user(error_message, chances + 1)
 
     def validate_input(self, user_input):
         valid_input = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "exit"]
@@ -37,6 +41,9 @@ class Cli():
         
     def handle_exit(self):
         self.log("Leaving so soon? Hope to see you back again shortly!")
+
+    def handle_safe_exit(self):
+        self.log("I'm sorry, there has been too many invalid inputs in a row, please start a new game :)")
 
     def prompt_player_turn(self, player):
          turn_prompt = f"It's {player.token}'s turn! Please select a square using 1-9:\n"
