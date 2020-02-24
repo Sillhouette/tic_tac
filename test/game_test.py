@@ -1,5 +1,6 @@
 import unittest
 
+from unittest.mock import Mock
 from src.game import Game
 
 # I'm not sure how to unit test init, start, play, and turn
@@ -36,5 +37,34 @@ class GameTest(unittest.TestCase):
         expected = game.players[1]
 
         actual = game.current_player()
+
+        self.assertEqual(expected, actual)
+
+    def test_game_is_over(self):
+        cli = Mock()
+        game = Game(cli=cli)
+
+        game.board.spaces = ["X"] * 9
+        expected = True
+
+        actual = game.game_is_over()
+
+        self.assertEqual(expected, actual)
+
+    def test_game_is_over_2(self):
+        cli = Mock()
+        game = Game(cli=cli)
+        game.exit = True
+        expected = True
+
+        actual = game.game_is_over()
+
+        self.assertEqual(expected, actual)
+
+    def test_game_is_not_over(self):
+        game = Game()
+        expected = False
+
+        actual = game.game_is_over()
 
         self.assertEqual(expected, actual)
