@@ -19,7 +19,7 @@ class Cli():
             self.writer(messages[message])
     
     def prompt_user(self, message=""):
-        return self.reader(message)
+        return self.reader(message).lower()
 
     def validate_input(self, user_input):
         valid_input = ["1", "2", "3", "4", "5", "6", "7", "8", "9", self.EXIT]

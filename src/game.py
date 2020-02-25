@@ -32,7 +32,7 @@ class Game():
     def turn(self):
         while True:
             player_choice = self.cli.prompt_player_turn(self.current_player())
-            if player_choice.lower() == self.cli.EXIT:
+            if player_choice == self.cli.EXIT:
                 self.exit = 1
                 break;
             if self.cli.validate_input(player_choice) and self.board.valid_move(self.input_to_index(player_choice)):
