@@ -66,7 +66,7 @@ class CliTest(unittest.TestCase):
         actual = cli.validate_input(args)
 
         self.assertEqual(expected, actual)
-   
+
     def test_input_recursion(self):
         reader_mock = Mock()
         reader_mock.side_effect = ["invalid input"] * 15

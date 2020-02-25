@@ -29,7 +29,7 @@ class Game():
             self.cli.handle_safe_exit()
         else:
             self.cli.goodbye()
-        
+
     def game_is_over(self):
         return self.exit or self.safe_exit or self.board.full()
 
@@ -37,9 +37,9 @@ class Game():
         if chances >= 5:
             self.safe_exit = True
             return
-            
+
         player_choice = self.cli.prompt_player_turn(self.current_player())
-        
+
         if player_choice == None:
             self.safe_exit = True
         elif player_choice.lower() == "exit":

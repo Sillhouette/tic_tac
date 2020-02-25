@@ -20,10 +20,10 @@ class Cli():
     def prompt_user(self, message="", chances=1):
         user_input = self.reader(message)
         error_message = "It seems you may have entered some invalid input. Please try again:\n"
-        
+
         if chances >= 5:
             return
-        
+
         if self.validate_input(user_input):
             return user_input
         else:
@@ -31,7 +31,7 @@ class Cli():
 
     def validate_input(self, user_input):
         valid_input = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "exit"]
-        return user_input in valid_input 
+        return user_input in valid_input
 
     def welcome(self):
         self.log("Hi! Welcome to Tic-Tac by Toenails Inc!")
