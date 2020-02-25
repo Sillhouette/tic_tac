@@ -33,9 +33,6 @@ class Cli():
     def handle_exit(self):
         self.log("Leaving so soon? Hope to see you back again shortly!")
 
-    def handle_safe_exit(self):
-        self.log("I'm sorry, there has been too many invalid inputs in a row, please start a new game :)")
-
     def prompt_player_turn(self, player):
          turn_prompt = f"It's {player.token}'s turn! Please select a square using 1-9:\n"
          player_input = self.prompt_user(turn_prompt)
