@@ -17,7 +17,7 @@ class Cli():
         for message in range(len(messages)):
             self.writer(messages[message])
     
-    def prompt_user(self, message="", chances=1):
+    def prompt_user(self, message=""):
         return self.reader(message)
 
     def validate_input(self, user_input):
