@@ -1,4 +1,5 @@
 class Cli():
+    EXIT = "exit"
 
     def __init__(self, writer=print, reader=input):
         self.writer = writer
@@ -21,7 +22,7 @@ class Cli():
         return self.reader(message)
 
     def validate_input(self, user_input):
-        valid_input = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "exit"]
+        valid_input = ["1", "2", "3", "4", "5", "6", "7", "8", "9", self.EXIT]
         return user_input in valid_input
 
     def welcome(self):
