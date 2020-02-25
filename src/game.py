@@ -10,7 +10,6 @@ class Game():
         self.board = board
         self.players = players
         self.exit = False
-        self.safe_exit = False
 
     def start(self):
         self.cli.welcome()
@@ -25,13 +24,11 @@ class Game():
     def handle_exit(self):
         if self.exit:
             self.cli.handle_exit()
-        elif self.safe_exit:
-            self.cli.handle_safe_exit()
         else:
             self.cli.goodbye()
 
     def game_is_over(self):
-        return self.exit or self.safe_exit or self.board.full()
+        return self.exit or self.board.full()
 
     def turn(self):
         while True:
