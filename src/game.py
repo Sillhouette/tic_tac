@@ -33,25 +33,16 @@ class Game():
     def game_is_over(self):
         return self.exit or self.safe_exit or self.board.full()
 
-    def turn(self, chances=1):
-        if chances >= 5:
-            self.safe_exit = True
-            return
+    def turn(self):
+        while True:
+            player_choice = self.cli.prompt_player_turn(self.current_player())
+            if self.cli.validate_input(player_choice) and self.board.valid_move(self.input_to_index(player_choice)):
+                   break;
+            self.cli.invalid_move()
 
-        player_choice = self.cli.prompt_player_turn(self.current_player())
-
-        if player_choice == None:
-            self.safe_exit = True
-        elif player_choice.lower() == "exit":
-            self.exit = True
-        else:
-            move = self.input_to_index(player_choice)
-            if self.board.valid_move(move):
-                self.board.update(move, self.current_player().token)
-                self.cli.display_board(self.board)
-            else:
-                self.cli.invalid_move()
-                self.turn(chances + 1)
+        move = self.input_to_index(player_choice)
+        self.board.update(move, self.current_player().token)
+        self.cli.display_board(self.board)
        
     def input_to_index(self, user_input):
         return int(user_input) - 1 
