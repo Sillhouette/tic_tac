@@ -3,6 +3,7 @@ from src.board import Board
 from src.player import Player
 
 class Game():
+    EXIT = "exit"
 
     def __init__(self, cli=Cli(), board=Board(), players=[Player(token="X"),
                                                           Player(token="O")]):
@@ -33,7 +34,7 @@ class Game():
     def turn(self):
         while True:
             player_choice = self.cli.prompt_player_turn(self.current_player())
-            if player_choice.lower() == "exit":
+            if player_choice.lower() == self.EXIT:
                 self.exit = 1
                 break;
             if self.cli.validate_input(player_choice) and self.board.valid_move(self.input_to_index(player_choice)):
