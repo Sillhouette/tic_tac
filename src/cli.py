@@ -27,7 +27,7 @@ class Cli():
     def welcome(self):
         self.log("Hi! Welcome to Tic-Tac by Toenails Inc!")
         
-    def goodbye(self):
+    def handle_game_end(self):
         self.log("You played a great game! See you next time!")
         
     def handle_exit(self):

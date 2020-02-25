@@ -25,7 +25,7 @@ class Game():
         if self.exit:
             self.cli.handle_exit()
         else:
-            self.cli.goodbye()
+            self.cli.handle_game_end()
 
     def game_is_over(self):
         return self.exit or self.board.full()
