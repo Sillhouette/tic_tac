@@ -46,6 +46,7 @@ class CliTest(unittest.TestCase):
         mock.assert_called_once_with(args)
         self.assertEqual(expected, actual)
 
+    @unittest.skip("This test is outdated as we no longer use recursion")
     def test_non_numeric_input(self):
         reader_mock = Mock()
         reader_mock.side_effect = ["invalid input", "1"]
@@ -66,7 +67,8 @@ class CliTest(unittest.TestCase):
         actual = cli.validate_input(args)
 
         self.assertEqual(expected, actual)
-
+    
+    @unittest.skip("This test is outdated as we are no longer recursing")
     def test_input_recursion(self):
         reader_mock = Mock()
         reader_mock.side_effect = ["invalid input"] * 15
