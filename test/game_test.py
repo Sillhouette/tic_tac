@@ -7,6 +7,17 @@ from src.game import Game
 # Should I just write integration tests for them?
 
 class GameTest(unittest.TestCase):
+    def test_start(self):
+        cli = Mock()
+        player_1 = Mock()
+        player_2 = Mock()
+        board = Mock()
+        game = Game(cli, board, [player_1, player_2])
+
+        game.start()
+
+        cli.welcome.assert_called()
+
     def test_input_to_index(self):
         game = Game()
         expected = 0
