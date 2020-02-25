@@ -3,12 +3,12 @@ from src.board import Board
 from src.player import Player
 
 class Game():
-
     def __init__(self, cli=Cli(), board=Board(), players=[Player(token="X"),
                                                           Player(token="O")]):
         self.cli = cli
         self.board = board
         self.players = players
+        self.exit = False
 
     def start(self):
         self.cli.welcome()
@@ -16,21 +16,32 @@ class Game():
 
     def play(self):
         self.cli.display_board(self.board)
-        while not self.board.full():
+        while not self.game_is_over():
             self.turn()
+        self.handle_exit()
 
-        self.cli.goodbye()
-    
-    def turn(self, error=False):
-        if error: self.cli.invalid_move()
+    def handle_exit(self):
+        if self.exit:
+            self.cli.handle_exit()
+        else:
+            self.cli.handle_game_end()
 
-        player_choice = self.cli.prompt_player_turn(self.current_player())
-        move = self.input_to_index(player_choice)
-        if self.board.valid_move(move):
+    def game_is_over(self):
+        return self.exit or self.board.full()
+
+    def turn(self):
+        while True:
+            player_choice = self.cli.prompt_player_turn(self.current_player())
+            if player_choice == self.cli.EXIT:
+                self.exit = 1
+                break;
+            if self.cli.validate_input(player_choice) and self.board.valid_move(self.input_to_index(player_choice)):
+                move = self.input_to_index(player_choice)
+                break;
+            self.cli.invalid_move()
+        if not self.exit:
             self.board.update(move, self.current_player().token)
             self.cli.display_board(self.board)
-        else:
-            self.turn(True)
        
     def input_to_index(self, user_input):
         return int(user_input) - 1 

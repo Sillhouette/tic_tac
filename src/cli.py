@@ -1,4 +1,5 @@
 class Cli():
+    EXIT = "exit"
 
     def __init__(self, writer=print, reader=input):
         self.writer = writer
@@ -18,14 +19,21 @@ class Cli():
             self.writer(messages[message])
     
     def prompt_user(self, message=""):
-        return self.reader(message)
+        return self.reader(message).lower()
+
+    def validate_input(self, user_input):
+        valid_input = ["1", "2", "3", "4", "5", "6", "7", "8", "9", self.EXIT]
+        return user_input in valid_input
 
     def welcome(self):
-        self.log("Hi! Welcome to Tic-Tac-Toe by Toenails Inc!")
+        self.log("Hi! Welcome to Tic-Tac by Toenails Inc!")
         
-    def goodbye(self):
+    def handle_game_end(self):
         self.log("You played a great game! See you next time!")
         
+    def handle_exit(self):
+        self.log("Leaving so soon? Hope to see you back again shortly!")
+
     def prompt_player_turn(self, player):
          turn_prompt = f"It's {player.token}'s turn! Please select a square using 1-9:\n"
          player_input = self.prompt_user(turn_prompt)
