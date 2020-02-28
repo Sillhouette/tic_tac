@@ -1,4 +1,5 @@
 import unittest
+import src.constants as constants
 
 from unittest.mock import call, Mock
 from src.cli import Cli
@@ -101,7 +102,7 @@ class CliTest(unittest.TestCase):
     def test_handle_exit(self):
         writer = Mock()
         cli = Cli(writer=writer)
-        expected = Cli.MESSAGES[Cli.EXIT] 
+        expected = Cli.MESSAGES[constants.EXIT] 
 
         actual = cli.handle_exit()
 
@@ -110,7 +111,7 @@ class CliTest(unittest.TestCase):
     def test_handle_game_end(self):
         writer = Mock()
         cli = Cli(writer=writer)
-        expected = Cli.MESSAGES[Cli.FINISHED] 
+        expected = Cli.MESSAGES[constants.FINISHED] 
 
         actual = cli.handle_game_end()
 
@@ -119,7 +120,7 @@ class CliTest(unittest.TestCase):
     def test_welcome(self):
         writer = Mock()
         cli = Cli(writer=writer)
-        expected = Cli.MESSAGES[Cli.WELCOME] 
+        expected = Cli.MESSAGES[constants.WELCOME] 
 
         actual = cli.welcome()
 
@@ -128,7 +129,7 @@ class CliTest(unittest.TestCase):
     def test_invalid_move(self):
         writer = Mock()
         cli = Cli(writer=writer)
-        expected = Cli.MESSAGES[Cli.ERROR] 
+        expected = Cli.MESSAGES[constants.ERROR] 
 
         actual = cli.invalid_move()
 
