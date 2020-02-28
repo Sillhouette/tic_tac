@@ -113,7 +113,7 @@ class ValidatorTest(unittest.TestCase):
         board = ThreeByThreeBoard()
         move = "87"
         validator = Validator()
-        expected = ["invalid", "87"]
+        expected = ["error", "87"]
 
         actual = validator.validate_3x3(move, board)
 
