@@ -101,7 +101,7 @@ class ThreeByThreeBoardTest(unittest.TestCase):
         board.spaces = ["X", "O", "X", "O", "O", "X", "O", "O", None]
         move = "9"
         token = "O"
-        expected_return = "end"
+        expected_return = "finished"
         expected_board = ["X", "O", "X", "O", "O", "X", "O", "O", "O"]
 
         actual_return = board.move_result(move, token)
