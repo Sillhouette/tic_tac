@@ -1,45 +1,54 @@
 class Cli():
     EXIT = "exit"
+    WELCOME = "welcome"
+    FINISHED = "finished"
+    ERROR = "error"
+    WIN = "win"
+    MOVE = "move"
+    REQUEST_MOVE = "request"
+    MESSAGES = {
+        WELCOME: "Hi! Welcome to Tic-Tac by Toenails Inc!",
+        EXIT: "Leaving so soon? Hope to see you back again shortly!",
+        FINISHED: "You played a great game! See you next time!",
+        ERROR: "\nI'm sorry, it seems you may have accidently made an invalid move, can you please try another position?",
+        WIN: (lambda token: f"{token} wins!"),
+        REQUEST_MOVE: (lambda token: f"It's {token}'s turn! Please select a square using 1-9:\n")
+    }
 
     def __init__(self, writer=print, reader=input):
         self.writer = writer
         self.reader = reader
 
     def log(self, message):
-        if isinstance(message, list):
-            self.log_messages(message)
-        else:
-            self.log_message(message)
-
-    def log_message(self, message):
         self.writer(message)
 
-    def log_messages(self, messages):
-        for message in range(len(messages)):
-            self.writer(messages[message])
-    
     def prompt_user(self, message=""):
         return self.reader(message).lower()
 
-    def validate_input(self, user_input):
-        valid_input = ["1", "2", "3", "4", "5", "6", "7", "8", "9", self.EXIT]
-        return user_input in valid_input
-
     def welcome(self):
-        self.log("Hi! Welcome to Tic-Tac by Toenails Inc!")
+        self.log(self.MESSAGES[self.WELCOME])
         
     def handle_game_end(self):
-        self.log("You played a great game! See you next time!")
+        self.log(self.MESSAGES[self.FINISHED])
         
     def handle_exit(self):
-        self.log("Leaving so soon? Hope to see you back again shortly!")
+        self.log(self.MESSAGES[self.EXIT])
 
-    def prompt_player_turn(self, player):
-         turn_prompt = f"It's {player.token}'s turn! Please select a square using 1-9:\n"
-         player_input = self.prompt_user(turn_prompt)
-         return player_input
+    def get_player_tokens(self):
+        return ["X", "O"]
 
-    def display_board(self, board):
+    def get_board_type(self):
+        return "3x3"
+
+    def request_move(self, player):
+         turn_prompt = self.MESSAGES[self.REQUEST_MOVE](player.token) 
+         return self.prompt_user(turn_prompt)
+
+    def print_board(self, board):
+        if board.type == "3x3":
+            self.display_3x3_board(board)
+
+    def display_3x3_board(self, board):
         border = "⊱ –––––– {⋆⌘⋆} –––––– ⊰"
         divider = "      ---+---+---"
         scrubbed_board = [token if token != None else " " for token in
@@ -57,9 +66,7 @@ class Cli():
 {border}
 """
         self.log(board_string)
-        return board_string
 
     def invalid_move(self):
-        error = "\nI'm sorry, it seems you may have accidently made an invalid move, can you please try another position?\n"
-        self.log(error)
+        self.log(self.MESSAGES[self.ERROR])
 
