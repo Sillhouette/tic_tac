@@ -25,7 +25,7 @@ class Game:
             selected_action, move = validator.validate_move(self.cli.request_move(current_player), self.board)
             result = self.actions[selected_action](move, current_player.token)
             if result != Cli.EXIT: self.cli.print_board(self.board)
-            if result in self.possible_results or self.board.full(): self.game_in_process = False
+            if result in self.possible_results: self.game_in_process = False
 
         self.cli.log(self.possible_results[result])
    
