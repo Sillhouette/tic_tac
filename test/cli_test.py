@@ -2,109 +2,44 @@ import unittest
 
 from unittest.mock import call, Mock
 from src.cli import Cli
-from src.board import Board
+from src.three_by_three_board import ThreeByThreeBoard
 
 class CliTest(unittest.TestCase):
     def test_log_message(self):
-        mock = Mock()
-        cli = Cli(mock)
+        writer = Mock()
+        cli = Cli(writer=writer)
         test_string = "Hello World"
 
-        cli.log(test_string)
+        actual = cli.log(test_string)
 
-        mock.assert_called_once_with(test_string)
+        writer.assert_called_once_with(test_string)
     
-    def test_log_messages(self):
-        mock = Mock()
-        cli = Cli(mock)
-        test_strings = ["Hello", "World"]
-        calls = [call("Hello"), call("World")]
-
-        cli.log(test_strings)
-
-        mock.assert_has_calls(calls)
-
     def test_prompt_user(self):
-        mock = Mock()
+        reader = Mock()
         expected = "1"
-        mock.return_value = expected
-        cli = Cli(reader=mock)
+        reader.return_value = expected
+        cli = Cli(reader=reader)
         
         actual = cli.prompt_user()
 
         self.assertEqual(expected, actual)
 
     def test_prompt_user_2(self):
-        mock = Mock()
+        reader = Mock()
         expected = "9"
         args = "Some prompt"
-        mock.return_value = expected
-        cli = Cli(reader=mock)
+        reader.return_value = expected
+        cli = Cli(reader=reader)
 
         actual = cli.prompt_user(args)
         
-        mock.assert_called_once_with(args)
+        reader.assert_called_once_with(args)
         self.assertEqual(expected, actual)
 
-    @unittest.skip("This test is outdated as we no longer use recursion")
-    def test_non_numeric_input(self):
-        reader_mock = Mock()
-        reader_mock.side_effect = ["invalid input", "1"]
-        expected_args = "It seems you may have entered some invalid input. Please try again:\n"
-        expected_return = "1"
-        cli = Cli(reader=reader_mock)
-
-        actual = cli.prompt_user()
-
-        reader_mock.assert_called_with(expected_args)
-        self.assertEqual(expected_return, actual)
-
-    def test_validate_input(self):
-        args = "invalid input"
-        expected = False
-        cli = Cli()
-
-        actual = cli.validate_input(args)
-
-        self.assertEqual(expected, actual)
-    
-    @unittest.skip("This test is outdated as we are no longer recursing")
-    def test_input_recursion(self):
-        reader_mock = Mock()
-        reader_mock.side_effect = ["invalid input"] * 15
-        expected = 5
-        expected_return = None
-        cli = Cli(reader=reader_mock)
-
-        actual_return = cli.prompt_user()
-        actual = reader_mock.call_count
-
-        self.assertEqual(expected, actual)
-        self.assertEqual(expected_return, actual_return)
-
-    def test_display_empty_board(self):
-        board = Board()
-        mock = Mock()
-        cli = Cli(mock)
-
-        expected =  """
-⊱ –––––– {⋆⌘⋆} –––––– ⊰
-
-         |   |   
-      ---+---+---
-         |   |   
-      ---+---+---
-         |   |   
-
-⊱ –––––– {⋆⌘⋆} –––––– ⊰
-"""
-
-        self.assertEqual(expected, cli.display_board(board))
-
-    def test_display_board_in_progress(self):
-        board = Board()
-        mock = Mock()
-        cli = Cli(mock)
+    def test_print_board_3x3(self):
+        board = ThreeByThreeBoard()
+        writer = Mock()
+        cli = Cli(writer=writer)
         board.spaces = ["X", " ", " ", "O", " ", "X", " ", " ", "O"]
        
         expected = """
@@ -118,14 +53,112 @@ class CliTest(unittest.TestCase):
 
 ⊱ –––––– {⋆⌘⋆} –––––– ⊰
 """
+        actual = cli.print_board(board)
+        
+        writer.assert_called_once_with(expected)
 
-        self.assertEqual(expected, cli.display_board(board))
+    def test_display_empty_3x3_board(self):
+        board = ThreeByThreeBoard()
+        writer = Mock()
+        cli = Cli(writer=writer)
+
+        expected =  """
+⊱ –––––– {⋆⌘⋆} –––––– ⊰
+
+         |   |   
+      ---+---+---
+         |   |   
+      ---+---+---
+         |   |   
+
+⊱ –––––– {⋆⌘⋆} –––––– ⊰
+"""
+        actual = cli.display_3x3_board(board)
+
+        writer.assert_called_once_with(expected)
+
+    def test_display_3x3_board_in_progress(self):
+        board = ThreeByThreeBoard()
+        writer = Mock()
+        cli = Cli(writer=writer)
+        board.spaces = ["X", " ", " ", "O", " ", "X", " ", " ", "O"]
+       
+        expected = """
+⊱ –––––– {⋆⌘⋆} –––––– ⊰
+
+       X |   |   
+      ---+---+---
+       O |   | X 
+      ---+---+---
+         |   | O 
+
+⊱ –––––– {⋆⌘⋆} –––––– ⊰
+"""
+        actual = cli.display_3x3_board(board)
+        
+        writer.assert_called_once_with(expected)
 
     def test_handle_exit(self):
-        mock = Mock()
-        cli = Cli(writer=mock)
-        expected = "Leaving so soon? Hope to see you back again shortly!"
+        writer = Mock()
+        cli = Cli(writer=writer)
+        expected = Cli.MESSAGES[Cli.EXIT] 
 
-        cli.handle_exit()
+        actual = cli.handle_exit()
 
-        mock.assert_called_with(expected)
+        writer.assert_called_with(expected)
+
+    def test_handle_game_end(self):
+        writer = Mock()
+        cli = Cli(writer=writer)
+        expected = Cli.MESSAGES[Cli.FINISHED] 
+
+        actual = cli.handle_game_end()
+
+        writer.assert_called_with(expected)
+
+    def test_welcome(self):
+        writer = Mock()
+        cli = Cli(writer=writer)
+        expected = Cli.MESSAGES[Cli.WELCOME] 
+
+        actual = cli.welcome()
+
+        writer.assert_called_with(expected)
+
+    def test_invalid_move(self):
+        writer = Mock()
+        cli = Cli(writer=writer)
+        expected = Cli.MESSAGES[Cli.ERROR] 
+
+        actual = cli.invalid_move()
+
+        writer.assert_called_with(expected)
+
+ 
+    def get_player_tokens(self):
+        cli = Cli()
+        expected = ["X", "O"]
+        
+        actual = cli.get_player_tokens()
+
+        self.assertEqual(expected, actual)
+
+    def get_board_type_3x3(self):
+        cli = Cli()
+        expected = "3x3"
+
+        actual = cli.get_board_type()
+
+        self.assertEqual(expected, actual)
+
+    def request_move(self):
+        player = Mock()
+        player.token = "X"
+        writer = Mock()
+        cli = Cli(writer=writer)
+        expected = "It's X's turn! Please select a square using 1-9:\n"
+
+        actual = cli.request_move(player)
+
+        self.assertEqual(expected, actual)
+
