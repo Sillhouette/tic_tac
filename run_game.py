@@ -1,7 +1,6 @@
-from src.game import Game
+from src.app import App 
 
-game = Game()
+app = App()
 
-game.start()
-
+app.initialize()
 
