@@ -1,52 +1,46 @@
 from src.cli import Cli
-from src.board import Board
 from src.player import Player
+from src.board_builder import BoardBuilder
+from src.validator import Validator
 
-class Game():
-    def __init__(self, cli=Cli(), board=Board(), players=[Player(token="X"),
-                                                          Player(token="O")]):
+class Game:
+    def __init__(self, cli, players, board):
         self.cli = cli
-        self.board = board
         self.players = players
-        self.exit = False
-
-    def start(self):
-        self.cli.welcome()
-        self.play()
+        self.board = board
+        self.game_in_process = True
+        self.possible_results = self.build_possible_results()
+        self.actions = {
+            Cli.MOVE: (lambda move, token: self.board.move_result(move, token)),
+            Cli.EXIT: (lambda move, token: Cli.EXIT),
+            Cli.ERROR: (lambda move, token: self.cli.log(Cli.MESSAGES[Cli.ERROR])) 
+        } #contains lambdas
 
     def play(self):
-        self.cli.display_board(self.board)
-        while not self.game_is_over():
-            self.turn()
-        self.handle_exit()
+        result = None
+        validator = Validator()
+        self.cli.print_board(self.board)
+        while(self.game_in_process):
+            current_player = self.current_player()
+            selected_action, move = validator.validate_move(self.cli.request_move(current_player), self.board)
+            result = self.actions[selected_action](move, current_player.token)
+            if result != Cli.EXIT: self.cli.print_board(self.board)
+            if result in self.possible_results or self.board.full(): self.game_in_process = False
 
-    def handle_exit(self):
-        if self.exit:
-            self.cli.handle_exit()
-        else:
-            self.cli.handle_game_end()
-
-    def game_is_over(self):
-        return self.exit or self.board.full()
-
-    def turn(self):
-        while True:
-            player_choice = self.cli.prompt_player_turn(self.current_player())
-            if player_choice == self.cli.EXIT:
-                self.exit = 1
-                break;
-            if self.cli.validate_input(player_choice) and self.board.valid_move(self.input_to_index(player_choice)):
-                move = self.input_to_index(player_choice)
-                break;
-            self.cli.invalid_move()
-        if not self.exit:
-            self.board.update(move, self.current_player().token)
-            self.cli.display_board(self.board)
-       
-    def input_to_index(self, user_input):
-        return int(user_input) - 1 
-
+        self.cli.log(self.possible_results[result])
+   
     def current_player(self):
         num_players = len(self.players)
-        return self.players[self.board.turn_count() % num_players]
+        turns_taken = self.board.turn_count()
+        return self.players[turns_taken % num_players]
 
+    def build_possible_results(self):
+        results = { 
+            Cli.EXIT: Cli.MESSAGES[Cli.EXIT],
+            Cli.FINISHED: Cli.MESSAGES[Cli.FINISHED]
+        }
+
+        for player in self.players:
+            results[player.token] = Cli.MESSAGES[Cli.WIN](player.token) 
+
+        return results
