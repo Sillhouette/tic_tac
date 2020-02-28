@@ -1,20 +1,18 @@
+import src.constants as constants
+
 class Validator():
-    THREE_BY_THREE = "3x3"
-    EXIT = "exit"
-    MOVE = "move"
-    ERROR = "error"
 
     def validate_move(self, move, board):
-        if board.type == self.THREE_BY_THREE:
+        if board.type == constants.THREE_BY_THREE:
             return self.validate_3x3(move, board)
 
     def validate_3x3(self, move, board):
-        if move.lower() == self.EXIT:
-            return [self.EXIT, None]
+        if move.lower() == constants.EXIT:
+            return [constants.EXIT, None]
         elif self.validate_3x3_input(move, board) and self.validate_3x3_move(move, board):
-             return [self.MOVE, move] 
+             return [constants.MOVE, move] 
     
-        return [self.ERROR, move]
+        return [constants.ERROR, move]
 
     def validate_3x3_input(self, move, board):
         valid_input = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
@@ -28,5 +26,5 @@ class Validator():
         return board.spaces[position] != None
 
     def within_board(self, position, board):
-        if board.type == self.THREE_BY_THREE:
+        if board.type == constants.THREE_BY_THREE:
             return position >= 0 and position <= board.size
