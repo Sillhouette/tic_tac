@@ -1,5 +1,7 @@
 import src.constants as constants
 
+from src.three_by_three_presenter import ThreeByThreePresenter
+
 class Cli():
     MESSAGES = {
         constants.WELCOME: "Hi! Welcome to Tic-Tac by Toenails Inc!",
@@ -13,6 +15,10 @@ class Cli():
     def __init__(self, writer=print, reader=input):
         self.writer = writer
         self.reader = reader
+
+    def set_presenter_type(self, board_type):
+        if board_type == constants.THREE_BY_THREE:
+            self.presenter = ThreeByThreePresenter()
 
     def log(self, message):
         self.writer(message)
@@ -33,7 +39,7 @@ class Cli():
         return ["X", "O"]
 
     def get_board_type(self):
-        return "3x3"
+        return constants.THREE_BY_THREE
     
     def build_possible_results(self, players):
         results = { 
@@ -51,27 +57,7 @@ class Cli():
          return self.prompt_user(turn_prompt)
 
     def print_board(self, board):
-        if board.type == "3x3":
-            self.display_3x3_board(board)
-
-    def display_3x3_board(self, board):
-        border = "⊱ –––––– {⋆⌘⋆} –––––– ⊰"
-        divider = "      ---+---+---"
-        scrubbed_board = [token if token != None else " " for token in
-                          board.spaces]
-
-        board_string = f"""
-{border}
-
-       {scrubbed_board[0]} | {scrubbed_board[1]} | {scrubbed_board[2]} 
-{divider}
-       {scrubbed_board[3]} | {scrubbed_board[4]} | {scrubbed_board[5]} 
-{divider}
-       {scrubbed_board[6]} | {scrubbed_board[7]} | {scrubbed_board[8]} 
-
-{border}
-"""
-        self.log(board_string)
+        self.log(self.presenter.present_board(board))
 
     def invalid_move(self):
         self.log(self.MESSAGES[constants.ERROR])
