@@ -2,14 +2,13 @@ import src.constants as constants
 
 from src.cli import Cli
 from src.player import Player
-from src.validator import Validator
 
 class Game:
-    def __init__(self, cli, players, board):
+    def __init__(self, cli, players, board, validator):
         self.cli = cli
         self.players = players
         self.board = board
-        self.validator = Validator()
+        self.validator = validator
         self.game_in_process = True
         self.possible_results = self.cli.build_possible_results(self.players)
         self.actions = {
