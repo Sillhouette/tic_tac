@@ -41,6 +41,7 @@ class CliTest(unittest.TestCase):
         board = ThreeByThreeBoard()
         writer = Mock()
         cli = Cli(writer=writer)
+        cli.set_presenter_type(constants.THREE_BY_THREE)
         board.spaces = ["X", " ", " ", "O", " ", "X", " ", " ", "O"]
        
         expected = """
@@ -62,6 +63,7 @@ class CliTest(unittest.TestCase):
         board = ThreeByThreeBoard()
         writer = Mock()
         cli = Cli(writer=writer)
+        cli.set_presenter_type(constants.THREE_BY_THREE)
 
         expected =  """
 ⊱ –––––– {⋆⌘⋆} –––––– ⊰
@@ -74,7 +76,7 @@ class CliTest(unittest.TestCase):
 
 ⊱ –––––– {⋆⌘⋆} –––––– ⊰
 """
-        actual = cli.display_3x3_board(board)
+        actual = cli.print_board(board)
 
         writer.assert_called_once_with(expected)
 
@@ -82,6 +84,7 @@ class CliTest(unittest.TestCase):
         board = ThreeByThreeBoard()
         writer = Mock()
         cli = Cli(writer=writer)
+        cli.set_presenter_type(constants.THREE_BY_THREE)
         board.spaces = ["X", " ", " ", "O", " ", "X", " ", " ", "O"]
        
         expected = """
@@ -95,7 +98,7 @@ class CliTest(unittest.TestCase):
 
 ⊱ –––––– {⋆⌘⋆} –––––– ⊰
 """
-        actual = cli.display_3x3_board(board)
+        actual = cli.print_board(board)
         
         writer.assert_called_once_with(expected)
 
