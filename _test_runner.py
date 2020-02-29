@@ -5,9 +5,11 @@ from test.three_by_three_board_test import ThreeByThreeBoardTest
 from test.player_test import PlayerTest
 from test.game_test import GameTest
 from test.board_builder_test import BoardBuilderTest
-from test.validator_test import ValidatorTest
+from test.three_by_three_validator_test import ThreeByThreeValidatorTest
 from test.app_test import AppTest
 from test.player_builder_test import PlayerBuilderTest
+from test.validator_builder_test import ValidatorBuilderTest
+from test.three_by_three_presenter_test import ThreeByThreePresenterTest
 
 def suite():
     suite = unittest.TestSuite()
@@ -15,10 +17,12 @@ def suite():
     suite.addTests(unittest.TestLoader().loadTestsFromTestCase(PlayerTest))
     suite.addTests(unittest.TestLoader().loadTestsFromTestCase(GameTest))
     suite.addTests(unittest.TestLoader().loadTestsFromTestCase(BoardBuilderTest))
-    suite.addTests(unittest.TestLoader().loadTestsFromTestCase(ValidatorTest))
+    suite.addTests(unittest.TestLoader().loadTestsFromTestCase(ThreeByThreeValidatorTest))
     suite.addTests(unittest.TestLoader().loadTestsFromTestCase(AppTest))
     suite.addTests(unittest.TestLoader().loadTestsFromTestCase(PlayerBuilderTest))
     suite.addTests(unittest.TestLoader().loadTestsFromTestCase(ThreeByThreeBoardTest))
+    suite.addTests(unittest.TestLoader().loadTestsFromTestCase(ValidatorBuilderTest))
+    suite.addTests(unittest.TestLoader().loadTestsFromTestCase(ThreeByThreePresenterTest))
     return suite
 
 if __name__ == '__main__':
