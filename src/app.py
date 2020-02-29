@@ -2,6 +2,7 @@ from src.cli import Cli
 from src.game import Game
 from src.board_builder import BoardBuilder
 from src.player_builder import PlayerBuilder
+from src.validator_builder import ValidatorBuilder
 
 class App():
     def __init__(self, cli=Cli()):
@@ -11,7 +12,9 @@ class App():
         self.cli.welcome()
         players = self.setup_players()
         board = self.setup_board()
-        game = Game(self.cli, players, board)
+        self.cli.set_presenter_type(board.type)
+        validator = self.setup_validator(board)
+        game = Game(self.cli, players, board, validator)
         game.play()
         #self.cli.handle_game_end()
 
@@ -26,3 +29,8 @@ class App():
         builder = BoardBuilder()
         board = builder.build_board(board_type)
         return board
+
+    def setup_validator(self, board):
+        builder = ValidatorBuilder()
+
+        return builder.build_validator(board.type)
