@@ -14,9 +14,8 @@ class App():
         board = self.setup_board()
         self.cli.set_presenter_type(board.type)
         validator = self.setup_validator(board)
-        game = Game(self.cli, players, board, validator)
-        game.play()
-        #self.cli.handle_game_end()
+        self.game = Game(self.cli, players, board, validator)
+        self.game.play()
 
     def setup_players(self):
         tokens = self.cli.get_player_tokens()
