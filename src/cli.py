@@ -35,6 +35,16 @@ class Cli():
     def handle_exit(self):
         self.log(self.MESSAGES[constants.EXIT])
 
+    def print_board(self, board):
+        self.log(self.presenter.present_board(board))
+
+    def invalid_move(self):
+        self.log(self.MESSAGES[constants.ERROR])
+
+    def request_move(self, player):
+         turn_prompt = self.MESSAGES[constants.REQUEST_MOVE](player.token)
+         return self.prompt_user(turn_prompt)
+
     def get_player_tokens(self):
         return ["X", "O"]
 
@@ -51,14 +61,4 @@ class Cli():
             results[player.token] = self.MESSAGES[constants.WIN](player.token) 
 
         return results
-    
-    def request_move(self, player):
-         turn_prompt = self.MESSAGES[constants.REQUEST_MOVE](player.token) 
-         return self.prompt_user(turn_prompt)
-
-    def print_board(self, board):
-        self.log(self.presenter.present_board(board))
-
-    def invalid_move(self):
-        self.log(self.MESSAGES[constants.ERROR])
 
