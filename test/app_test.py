@@ -14,7 +14,7 @@ class AppTest(unittest.TestCase):
         app = App(cli)
         app.setup_players = Mock()
         
-        expected = app.initialize()
+        actual = app.initialize()
 
         cli.welcome.assert_called()
    
@@ -24,7 +24,7 @@ class AppTest(unittest.TestCase):
         app = App(cli)
         app.setup_players = Mock()
         
-        expected = app.initialize()
+        actual = app.initialize()
 
         app.setup_players.assert_called()
    
@@ -35,7 +35,7 @@ class AppTest(unittest.TestCase):
         app.setup_players = Mock()
         app.setup_board = Mock()
 
-        expected = app.initialize()
+        actual = app.initialize()
 
         app.setup_board.assert_called()
     
@@ -46,7 +46,7 @@ class AppTest(unittest.TestCase):
         app.setup_players = Mock()
         app.setup_validator = Mock()
 
-        expected = app.initialize()
+        actual = app.initialize()
 
         app.setup_validator.assert_called()
     
@@ -57,7 +57,7 @@ class AppTest(unittest.TestCase):
         app = App(cli)
         app.setup_players = Mock()
 
-        expected = app.initialize()
+        actual = app.initialize()
 
         app.game.play.assert_called()
 
