@@ -59,7 +59,7 @@ class CliTest(unittest.TestCase):
         
         writer.assert_called_once_with(expected)
 
-    def test_display_empty_3x3_board(self):
+    def test_print_empty_3x3_board(self):
         board = ThreeByThreeBoard()
         writer = Mock()
         cli = Cli(writer=writer)
@@ -80,7 +80,7 @@ class CliTest(unittest.TestCase):
 
         writer.assert_called_once_with(expected)
 
-    def test_display_3x3_board_in_progress(self):
+    def test_print_3x3_board_in_progress(self):
         board = ThreeByThreeBoard()
         writer = Mock()
         cli = Cli(writer=writer)
@@ -139,7 +139,7 @@ class CliTest(unittest.TestCase):
         writer.assert_called_with(expected)
 
  
-    def get_player_tokens(self):
+    def test_get_player_tokens(self):
         cli = Cli()
         expected = ["X", "O"]
         
@@ -147,7 +147,7 @@ class CliTest(unittest.TestCase):
 
         self.assertEqual(expected, actual)
 
-    def get_board_type_3x3(self):
+    def test_get_board_type_3x3(self):
         cli = Cli()
         expected = "3x3"
 
@@ -155,14 +155,35 @@ class CliTest(unittest.TestCase):
 
         self.assertEqual(expected, actual)
 
-    def request_move(self):
+    def test_request_move(self):
         player = Mock()
         player.token = "X"
-        writer = Mock()
-        cli = Cli(writer=writer)
+        reader = Mock()
+        cli = Cli(reader=reader)
+        cli.prompt_user = Mock()
         expected = "It's X's turn! Please select a square using 1-9:\n"
 
         actual = cli.request_move(player)
 
-        self.assertEqual(expected, actual)
+        cli.prompt_user.assert_called_with(expected)
 
+    def test_build_possible_results(self):
+        player_1 = Mock()
+        player_2 = Mock()
+        player_1.token = "X"
+        player_2.token = "O"
+        players = [player_1, player_2]
+        cli = Cli()
+        expected = True
+
+        results = cli.build_possible_results(players)
+
+        results_has_player_1_key = player_1.token in results
+        results_has_player_2_key = player_2.token in results
+        results_has_exit_key = constants.EXIT in results
+        results_has_finished_key = constants.FINISHED in results
+
+        self.assertEqual(expected, results_has_player_1_key)
+        self.assertEqual(expected, results_has_player_2_key)
+        self.assertEqual(expected, results_has_exit_key)
+        self.assertEqual(expected, results_has_finished_key)
