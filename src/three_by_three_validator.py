@@ -7,11 +7,8 @@ class ThreeByThreeValidator():
     def validate(self, move):
         move = move.lower()
         if self.validate_input(move):
-            if move == constants.EXIT:
-                return [constants.EXIT, None]
-            elif self.board.valid_move(move):
-                return [constants.MOVE, move]
-    
+            return self.board.generate_move_action(move)
+
         return [constants.ERROR, move]
 
     def validate_input(self, move):
