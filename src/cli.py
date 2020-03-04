@@ -6,10 +6,11 @@ class Cli():
     MESSAGES = {
         constants.WELCOME: "Hi! Welcome to Tic-Tac by Toenails Inc!",
         constants.EXIT: "Leaving so soon? Hope to see you back again shortly!",
-        constants.FINISHED: "You played a great game! See you next time!",
+        constants.CATS: "Cats game! You all played phenomenally!",
         constants.ERROR: "\nI'm sorry, it seems you may have accidently made an invalid move, can you please try another position?",
-        constants.WIN: (lambda token: f"{token} wins!"),
-        constants.REQUEST_MOVE: (lambda token: f"It's {token}'s turn! Please select a square using 1-9:\n")
+        constants.WIN: (lambda token: f"Congratulations {token}! you win!"),
+        constants.REQUEST_MOVE: (lambda token: f"It's {token}'s turn! Please select a square using 1-9:\n"),
+        constants.REPLAY: "\nTo play a new game please restart the app with the command 'python3 run_game.py'"
     }
 
     def __init__(self, writer=print, reader=input):
@@ -29,8 +30,11 @@ class Cli():
     def welcome(self):
         self.log(self.MESSAGES[constants.WELCOME])
         
-    def handle_game_end(self):
-        self.log(self.MESSAGES[constants.FINISHED])
+    def handle_cats_game(self):
+        self.log(self.MESSAGES[constants.CATS])
+
+    def handle_replay(self):
+        self.log(self.MESSAGES[constants.REPLAY])
         
     def handle_exit(self):
         self.log(self.MESSAGES[constants.EXIT])
@@ -54,7 +58,7 @@ class Cli():
     def build_possible_results(self, players):
         results = { 
             constants.EXIT: self.MESSAGES[constants.EXIT],
-            constants.FINISHED: self.MESSAGES[constants.FINISHED]
+            constants.CATS: self.MESSAGES[constants.CATS]
         }
 
         for player in players:
