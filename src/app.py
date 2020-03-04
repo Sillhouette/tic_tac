@@ -16,6 +16,7 @@ class App():
         validator = self.setup_validator(board)
         self.game = Game(self.cli, players, board, validator)
         self.game.play()
+        self.cli.handle_replay()
 
     def setup_players(self):
         tokens = self.cli.get_player_tokens()
@@ -32,4 +33,4 @@ class App():
     def setup_validator(self, board):
         builder = ValidatorBuilder()
 
-        return builder.build_validator(board.type)
+        return builder.build_validator(board)
