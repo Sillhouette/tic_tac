@@ -23,7 +23,7 @@ class Game:
         while(self.game_in_process):
             current_player = self.current_player()
             player_choice = self.cli.request_move(current_player)
-            selected_action, move = self.validator.validate_move(player_choice, self.board)
+            selected_action, move = self.validator.validate(player_choice)
             result = self.actions[selected_action](move, current_player.token)
             if not self.player_chose_exit(result): self.cli.print_board(self.board)
             if self.game_over(result): self.game_in_process = False
