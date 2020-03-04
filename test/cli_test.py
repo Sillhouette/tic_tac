@@ -4,6 +4,7 @@ import src.constants as constants
 from unittest.mock import call, Mock
 from src.cli import Cli
 from src.three_by_three_board import ThreeByThreeBoard
+from src.three_by_three_presenter import ThreeByThreePresenter
 
 class CliTest(unittest.TestCase):
     def test_log_message(self):
@@ -14,7 +15,17 @@ class CliTest(unittest.TestCase):
         actual = cli.log(test_string)
 
         writer.assert_called_once_with(test_string)
-    
+
+    def test_set_presenter_type_sets_3x3_when_given_3x3_board(self):
+        board_type = constants.THREE_BY_THREE
+        cli = Cli()
+        expected = True
+
+        cli.set_presenter_type(board_type)
+        actual = isinstance(cli.presenter, ThreeByThreePresenter)
+
+        self.assertEqual(expected, actual)
+ 
     def test_prompt_user(self):
         reader = Mock()
         expected = "1"
@@ -110,13 +121,23 @@ class CliTest(unittest.TestCase):
         actual = cli.handle_exit()
 
         writer.assert_called_with(expected)
-
-    def test_handle_game_end(self):
+    
+    def test_handle_replay(self):
         writer = Mock()
         cli = Cli(writer=writer)
-        expected = Cli.MESSAGES[constants.FINISHED] 
+        expected = Cli.MESSAGES[constants.REPLAY]
 
-        actual = cli.handle_game_end()
+        actual = cli.handle_replay()
+
+        writer.assert_called_with(expected)
+
+
+    def test_handle_cats_game(self):
+        writer = Mock()
+        cli = Cli(writer=writer)
+        expected = Cli.MESSAGES[constants.CATS]
+
+        actual = cli.handle_cats_game()
 
         writer.assert_called_with(expected)
 
@@ -139,7 +160,7 @@ class CliTest(unittest.TestCase):
         writer.assert_called_with(expected)
 
  
-    def test_get_player_tokens(self):
+    def test_get_player_tokens_returns_list_of_player_tokens(self):
         cli = Cli()
         expected = ["X", "O"]
         
@@ -147,7 +168,7 @@ class CliTest(unittest.TestCase):
 
         self.assertEqual(expected, actual)
 
-    def test_get_board_type_3x3(self):
+    def test_get_board_type_returns_3x3(self):
         cli = Cli()
         expected = "3x3"
 
@@ -167,7 +188,7 @@ class CliTest(unittest.TestCase):
 
         cli.prompt_user.assert_called_with(expected)
 
-    def test_build_possible_results(self):
+    def test_build_possible_results_returns_list_with_all_possible_results(self):
         player_1 = Mock()
         player_2 = Mock()
         player_1.token = "X"
@@ -181,7 +202,7 @@ class CliTest(unittest.TestCase):
         results_has_player_1_key = player_1.token in results
         results_has_player_2_key = player_2.token in results
         results_has_exit_key = constants.EXIT in results
-        results_has_finished_key = constants.FINISHED in results
+        results_has_finished_key = constants.CATS in results
 
         self.assertEqual(expected, results_has_player_1_key)
         self.assertEqual(expected, results_has_player_2_key)
