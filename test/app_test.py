@@ -61,8 +61,7 @@ class AppTest(unittest.TestCase):
 
         app.game.play.assert_called()
 
-
-    def test_setup_players(self):
+    def test_setup_players_returns_list_of_players(self):
         cli = Mock()
         cli.get_player_tokens = Mock()
         cli.get_player_tokens.return_value = ["X", "O"]
@@ -77,7 +76,7 @@ class AppTest(unittest.TestCase):
         self.assertEqual(expected_length, actual_length)
         self.assertEqual(expected_is_players, actual_is_players)
 
-    def test_setup_3x3_board(self):
+    def test_setup_board_can_setup_3x3_board(self):
         cli = Mock()
         cli.get_board_type = Mock()
         cli.get_board_type.return_value = "3x3"
@@ -89,7 +88,7 @@ class AppTest(unittest.TestCase):
 
         self.assertEqual(expected, actual)
 
-    def test_setup_validator(self):
+    def test_setup_validator_can_setup_3x3_validator(self):
         cli = Mock()
         board = Mock()
         board.type = "3x3"
