@@ -47,6 +47,14 @@ class ThreeByThreeBoard():
     def within_board(self, position):
         return position >= 0 and position <= self.size
 
+    def generate_move_action(self, move):
+        if move == constants.EXIT:
+            return [constants.EXIT, None]
+        elif self.valid_move(move):
+            return [constants.MOVE, move]
+        
+        return [constants.ERROR, move]
+
     def winner(self):
         winner = None
         for combo in self.WIN_COMBINATIONS:
