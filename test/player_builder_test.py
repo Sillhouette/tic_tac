@@ -5,7 +5,7 @@ from src.player import Player
 
 class PlayerBuilderTest(unittest.TestCase):
 
-    def test_build_players(self):
+    def test_build_players_builds_list_of_two_players(self):
         builder = PlayerBuilder()
         tokens = ['X', 'O']
         expected = True
