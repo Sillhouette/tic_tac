@@ -5,28 +5,75 @@ from unittest.mock import Mock, patch
 from src.game import Game
 
 class GameTest(unittest.TestCase):
-    def test_player_chose_exit(self):
+    def test_player_chose_exit_returns_false_when_given_exit(self):
         cli = Mock()
         player_1, player_2 = Mock(), Mock()
         players = [player_1, player_2]
         board = Mock()
         validator = Mock()
         game = Game(cli, players, board, validator)
-        expected_1 = True
-        expected_2 = False
+        expected = False
 
-        actual_1 = game.player_chose_exit(constants.EXIT)
-        actual_2 = game.player_chose_exit(constants.MOVE)
+        actual = game.player_chose_exit(constants.MOVE)
 
-        self.assertEqual(expected_1, actual_1)
-        self.assertEqual(expected_2, actual_2)
+        self.assertEqual(expected, actual)
 
-    def test_game_over(self):
+
+    def test_player_chose_exit_returns_true_when_given_exit(self):
+        cli = Mock()
+        player_1, player_2 = Mock(), Mock()
+        players = [player_1, player_2]
+        board = Mock()
+        validator = Mock()
+        game = Game(cli, players, board, validator)
+        expected = True
+
+        actual = game.player_chose_exit(constants.EXIT)
+
+        self.assertEqual(expected, actual)
+
+    def test_game_over_returns_true_on_exit(self):
         cli = Mock()
         cli.build_possible_results = Mock()
         cli.build_possible_results.return_value = {
             constants.EXIT: None,
-            constants.FINISHED: None
+            constants.CATS: None
+        }
+        player_1, player_2 = Mock(), Mock()
+        players = [player_1, player_2]
+        board = Mock()
+        validator = Mock()
+        game = Game(cli, players, board, validator)
+        expected = True
+
+        actual = game.game_over(constants.EXIT)
+
+        self.assertEqual(expected, actual)
+
+    def test_game_over_returns_true_on_cats_game(self):
+        cli = Mock()
+        cli.build_possible_results = Mock()
+        cli.build_possible_results.return_value = {
+            constants.EXIT: None,
+            constants.CATS: None
+        }
+        player_1, player_2 = Mock(), Mock()
+        players = [player_1, player_2]
+        board = Mock()
+        validator = Mock()
+        game = Game(cli, players, board, validator)
+        expected = True
+
+        actual = game.game_over(constants.CATS)
+
+        self.assertEqual(expected, actual)
+
+    def test_game_over_returns_false_on_other_input(self):
+        cli = Mock()
+        cli.build_possible_results = Mock()
+        cli.build_possible_results.return_value = {
+            constants.EXIT: None,
+            constants.CATS: None
         }
         player_1, player_2 = Mock(), Mock()
         players = [player_1, player_2]
@@ -34,17 +81,13 @@ class GameTest(unittest.TestCase):
         validator = Mock()
         game = Game(cli, players, board, validator)
         bad_input = "Gibberish"
-        expected = True
+        expected = False
 
-        actual = game.game_over(constants.EXIT)
-        actual_2 = game.game_over(constants.FINISHED)
-        actual_3 = game.game_over(bad_input)
+        actual = game.game_over(bad_input)
 
         self.assertEqual(expected, actual)
-        self.assertEqual(expected, actual_2)
-        self.assertNotEqual(expected, actual_3)
 
-    def test_current_player(self):
+    def test_current_player_returns_current_player_on_turn_5(self):
         cli = Mock()
         validator = Mock()
         player_1, player_2 = Mock(), Mock()
@@ -59,7 +102,7 @@ class GameTest(unittest.TestCase):
 
         self.assertEqual(expected, actual)
 
-    def test_current_player_2(self):
+    def test_current_player_returns_current_player_on_turn_8(self):
         cli = Mock()
         validator = Mock()
         player_1, player_2 = Mock(), Mock()
