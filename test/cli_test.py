@@ -152,6 +152,15 @@ class CliTest(unittest.TestCase):
 
         writer.assert_called_with(expected)
 
+    def test_notify_for_computer_player(self):
+        writer = Mock()
+        cli = Cli(writer=writer)
+        expected = Cli.MESSAGES[constants.COMPUTER_TURN]
+
+        actual = cli.notify_for_computer_turn()
+
+        writer.assert_called_with(expected)
+
     def test_invalid_move(self):
         writer = Mock()
         cli = Cli(writer=writer)
