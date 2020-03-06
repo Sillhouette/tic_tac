@@ -2,7 +2,8 @@ import unittest
 
 from test.cli_test import CliTest
 from test.three_by_three_board_test import ThreeByThreeBoardTest
-from test.player_test import PlayerTest
+from test.human_player_test import HumanPlayerTest
+from test.computer_player_test import ComputerPlayerTest
 from test.game_test import GameTest
 from test.board_builder_test import BoardBuilderTest
 from test.three_by_three_validator_test import ThreeByThreeValidatorTest
@@ -14,7 +15,8 @@ from test.three_by_three_presenter_test import ThreeByThreePresenterTest
 def suite():
     suite = unittest.TestSuite()
     suite.addTests(unittest.TestLoader().loadTestsFromTestCase(CliTest))
-    suite.addTests(unittest.TestLoader().loadTestsFromTestCase(PlayerTest))
+    suite.addTests(unittest.TestLoader().loadTestsFromTestCase(HumanPlayerTest))
+    suite.addTests(unittest.TestLoader().loadTestsFromTestCase(ComputerPlayerTest))
     suite.addTests(unittest.TestLoader().loadTestsFromTestCase(GameTest))
     suite.addTests(unittest.TestLoader().loadTestsFromTestCase(BoardBuilderTest))
     suite.addTests(unittest.TestLoader().loadTestsFromTestCase(ThreeByThreeValidatorTest))
