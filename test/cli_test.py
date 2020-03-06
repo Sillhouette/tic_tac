@@ -7,7 +7,7 @@ from src.three_by_three_board import ThreeByThreeBoard
 from src.three_by_three_presenter import ThreeByThreePresenter
 
 class CliTest(unittest.TestCase):
-    def test_log_message(self):
+    def test_log_message_logs_message(self):
         writer = Mock()
         cli = Cli(writer=writer)
         test_string = "Hello World"
