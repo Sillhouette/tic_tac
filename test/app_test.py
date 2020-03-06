@@ -71,7 +71,7 @@ class AppTest(unittest.TestCase):
         actual = app.initialize()
 
         app.game.play.assert_called()
-    
+
     def test_setup_players_returns_list_of_players(self):
         cli = Mock()
         cli.get_player_tokens = Mock()
@@ -83,7 +83,7 @@ class AppTest(unittest.TestCase):
         app.setup_validator()
         expected_length = 2
         expected_is_players = True
-        
+
         app.setup_players()
         actual = app.players
         actual_length = len(actual)
