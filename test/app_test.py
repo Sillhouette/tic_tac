@@ -72,7 +72,7 @@ class AppTest(unittest.TestCase):
 
         app.game.play.assert_called()
 
-    def test_setup_players_returns_list_of_players(self):
+    def test_setup_players_can_setup_players(self):
         cli = Mock()
         cli.get_player_tokens = Mock()
         cli.get_board_type = Mock()
@@ -118,3 +118,4 @@ class AppTest(unittest.TestCase):
         actual = isinstance(validator, ThreeByThreeValidator)
 
         self.assertEqual(expected, actual)
+
