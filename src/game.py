@@ -1,7 +1,6 @@
 import src.constants as constants
 
 from src.cli import Cli
-from src.player import Player
 
 class Game:
     def __init__(self, cli, players, board, validator):
@@ -22,8 +21,8 @@ class Game:
         self.cli.print_board(self.board)
         while(self.game_in_process):
             current_player = self.current_player()
-            player_choice = self.cli.request_move(current_player)
-            selected_action, move = self.validator.validate(player_choice)
+            player_choice = current_player.get_move()
+            selected_action, move = player_choice
             result = self.actions[selected_action](move, current_player.token)
             if not self.player_chose_exit(result): self.cli.print_board(self.board)
             if self.game_over(result): self.game_in_process = False
