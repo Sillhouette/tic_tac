@@ -75,17 +75,18 @@ class CliTest(unittest.TestCase):
         writer = Mock()
         cli = Cli(writer=writer)
         cli.set_presenter_type(constants.THREE_BY_THREE)
+        colorize = (lambda i: f"{constants.EMPTY_INDEX_COLOR_START}{i}{constants.EMPTY_INDEX_COLOR_END}")
 
-        expected =  """
-⊱ –––––– {⋆⌘⋆} –––––– ⊰
+        expected =  f"""
+{cli.presenter.border}
 
-         |   |   
+       {colorize(1)} | {colorize(2)} | {colorize(3)} 
       ---+---+---
-         |   |   
+       {colorize(4)} | {colorize(5)} | {colorize(6)} 
       ---+---+---
-         |   |   
+       {colorize(7)} | {colorize(8)} | {colorize(9)} 
 
-⊱ –––––– {⋆⌘⋆} –––––– ⊰
+{cli.presenter.border}
 """
         actual = cli.print_board(board)
 
@@ -96,18 +97,19 @@ class CliTest(unittest.TestCase):
         writer = Mock()
         cli = Cli(writer=writer)
         cli.set_presenter_type(constants.THREE_BY_THREE)
-        board.spaces = ["X", " ", " ", "O", " ", "X", " ", " ", "O"]
-       
-        expected = """
-⊱ –––––– {⋆⌘⋆} –––––– ⊰
+        board.spaces = ["X", None, None, "O", None, "X", None, None, "O"]
+        colorize = (lambda i: f"{constants.EMPTY_INDEX_COLOR_START}{i}{constants.EMPTY_INDEX_COLOR_END}")
 
-       X |   |   
-      ---+---+---
-       O |   | X 
-      ---+---+---
-         |   | O 
+        expected =  f"""
+{cli.presenter.border}
 
-⊱ –––––– {⋆⌘⋆} –––––– ⊰
+       X | {colorize(2)} | {colorize(3)} 
+      ---+---+---
+       O | {colorize(5)} | X 
+      ---+---+---
+       {colorize(7)} | {colorize(8)} | O 
+
+{cli.presenter.border}
 """
         actual = cli.print_board(board)
         
