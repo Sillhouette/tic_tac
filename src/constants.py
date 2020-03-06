@@ -9,4 +9,4 @@ THREE_BY_THREE = "3x3"
 REPLAY = "replay"
 EMPTY_INDEX_COLOR_START = "\u001b[38;5;243m"
 EMPTY_INDEX_COLOR_END = "\u001b[0m"
-
+COMPUTER_TURN = "computer_turn"
