@@ -10,7 +10,7 @@ class PlayerBuilder():
     def build_players(self, player_tokens):
         players = []
         players.append(HumanPlayer(self.cli, self.validator, player_tokens[0]))
-        players.append(ComputerPlayer(self.board, player_tokens[1]))
+        players.append(ComputerPlayer(self.board, self.cli, player_tokens[1]))
         #for token in player_tokens:
         #    players.append(Player(cli, token))
 
