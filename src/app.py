@@ -40,3 +40,4 @@ class App():
         builder = ValidatorBuilder()
 
         self.validator = builder.build_validator(self.board)
+
