@@ -7,7 +7,8 @@ from src.three_by_three_board import ThreeByThreeBoard
 class ComputerPlayerTest(unittest.TestCase):
     def test_setting_computer_player_token(self):
         board = Mock()
-        computer = ComputerPlayer(board)
+        cli = Mock()
+        computer = ComputerPlayer(board, cli)
         token = "%"
         expected = token
 
@@ -18,7 +19,8 @@ class ComputerPlayerTest(unittest.TestCase):
 
     def test_get_move_returns_a_valid_move_every_turn(self):
         board = ThreeByThreeBoard()
-        computer = ComputerPlayer(board)
+        cli = Mock()
+        computer = ComputerPlayer(board, cli)
         expected = True
 
         for space in board.spaces:
