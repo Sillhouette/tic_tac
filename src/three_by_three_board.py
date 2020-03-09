@@ -37,6 +37,9 @@ class ThreeByThreeBoard():
     def move_to_index(self, move):
         return int(move) - 1
 
+    def get_valid_moves(self):
+        return [index + 1 for index, space in enumerate(self.spaces) if space == None]
+
     def valid_move(self, move):
         position = self.move_to_index(move)
         return self.within_board(position) and not self.position_taken(position)
