@@ -218,6 +218,25 @@ class ThreeByThreeBoardTest(unittest.TestCase):
 
         self.assertEqual(expected, actual)
 
+    def test_compare_board_indicies_returns_true_when_values_are_same(self):
+        board = ThreeByThreeBoard()
+        board.update(1, "X")
+        board.update(2, "X")
+        expected = True
+
+        actual = board.compare_board_indicies(0, 1)
+
+        self.assertEqual(expected, actual)
+
+    def test_compare_board_indicies_returns_false_when_values_are_not_same(self):
+        board = ThreeByThreeBoard()
+        board.update(1, "X")
+        expected = False
+
+        actual = board.compare_board_indicies(0, 1)
+
+        self.assertEqual(expected, actual)
+
     def test_winner_returns_winning_token_when_player_has_won(self):
         board = ThreeByThreeBoard()
         token = "X"
