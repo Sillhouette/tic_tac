@@ -12,14 +12,16 @@ class ComputerPlayer():
 
     def get_move(self):
         self.cli.notify_for_computer_turn()
-
-        valid_space = False
         
-        while valid_space == False:
-            choice = random.randint(1, 9)
-            index = self.board.move_to_index(choice)
-            if not self.board.position_taken(index):
-                valid_space = str(choice)
+        choice = random.choice(self.board.get_valid_moves())
+
+        #valid_space = False
+        
+        #while valid_space == False:
+        #    choice = random.randint(1, 9)
+        #    index = self.board.move_to_index(choice)
+        #    if not self.board.position_taken(index):
+        #        valid_space = str(choice)
                 
-        return [constants.MOVE, choice]
+        return [constants.MOVE, str(choice)]
 
