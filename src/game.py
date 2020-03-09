@@ -3,15 +3,16 @@ import src.constants as constants
 from src.cli import Cli
 
 class Game:
-    def __init__(self, cli, players, board, validator):
+    def __init__(self, cli, players, board, validator, processor):
         self.cli = cli
         self.players = players
         self.board = board
         self.validator = validator
+        self.processor = processor
         self.game_in_process = True
         self.possible_results = self.cli.build_possible_results(self.players)
         self.actions = {
-            constants.MOVE: (lambda move, token: self.board.move_result(move, token)),
+            constants.MOVE: (lambda move, token: self.processor.execute_move(move, token)),
             constants.EXIT: (lambda move, token: constants.EXIT),
             constants.ERROR: (lambda move, token: self.cli.invalid_move()) 
         } #contains lambdas
