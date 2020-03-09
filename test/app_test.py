@@ -1,9 +1,10 @@
 import unittest
+import src.constants as constants
 
 from unittest.mock import Mock, patch
 from src.game import Game
 from src.app import App
-from src.player import Player
+from src.human_player import HumanPlayer as Player
 from src.three_by_three_board import ThreeByThreeBoard
 from src.three_by_three_validator import ThreeByThreeValidator
 
@@ -21,7 +22,12 @@ class AppTest(unittest.TestCase):
     @patch.object(Game, "play")
     def test_initialize_sets_players(self, game_play):
         cli = Mock()
-        app = App(cli)
+        cli.get_player_tokens = Mock()
+        cli.get_player_tokens.return_value = ["X", "O"]
+        board = Mock()
+        validator = Mock()
+        game = Mock()
+        app = App(cli, board, validator, game=game)
         app.setup_players = Mock()
         
         actual = app.initialize()
@@ -29,11 +35,16 @@ class AppTest(unittest.TestCase):
         app.setup_players.assert_called()
    
     @patch.object(Game, "play")
-    def test_initialize_sets_board(self, game_play):
+    def test_initialize_sets_board(self, play):
         cli = Mock()
+        cli.set_presenter_type = Mock()
+        cli.get_player_tokens = Mock()
+        cli.get_player_token.return_values = ["X", "O"]
         app = App(cli)
         app.setup_players = Mock()
         app.setup_board = Mock()
+        app.board = Mock()
+        app.board.type = constants.THREE_BY_THREE
 
         actual = app.initialize()
 
@@ -61,15 +72,20 @@ class AppTest(unittest.TestCase):
 
         app.game.play.assert_called()
 
-    def test_setup_players_returns_list_of_players(self):
+    def test_setup_players_can_setup_players(self):
         cli = Mock()
         cli.get_player_tokens = Mock()
+        cli.get_board_type = Mock()
         cli.get_player_tokens.return_value = ["X", "O"]
+        cli.get_board_type.return_value = constants.THREE_BY_THREE
         app = App(cli)
+        app.setup_board()
+        app.setup_validator()
         expected_length = 2
         expected_is_players = True
 
-        actual = app.setup_players()
+        app.setup_players()
+        actual = app.players
         actual_length = len(actual)
         actual_is_players = any(isinstance(player, Player) for player in actual)
 
@@ -83,7 +99,9 @@ class AppTest(unittest.TestCase):
         app = App(cli)
         expected = True
 
-        board = app.setup_board()
+        app.setup_board()
+        board = app.board
+
         actual = isinstance(board, ThreeByThreeBoard)
 
         self.assertEqual(expected, actual)
@@ -95,7 +113,9 @@ class AppTest(unittest.TestCase):
         app = App(cli)
         expected = True
 
-        validator = app.setup_validator(board)
+        app.setup_validator()
+        validator = app.validator
         actual = isinstance(validator, ThreeByThreeValidator)
 
         self.assertEqual(expected, actual)
+

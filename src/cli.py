@@ -5,6 +5,7 @@ from src.three_by_three_presenter import ThreeByThreePresenter
 class Cli():
     MESSAGES = {
         constants.WELCOME: "Hi! Welcome to Tic-Tac by Toenails Inc!",
+        constants.COMPUTER_TURN: "It's the computer player's turn now! His move is:",
         constants.EXIT: "Leaving so soon? Hope to see you back again shortly!",
         constants.CATS: "Cats game! You all played phenomenally!",
         constants.ERROR: "\nI'm sorry, it seems you may have accidently made an invalid move, can you please try another position?",
@@ -29,6 +30,9 @@ class Cli():
 
     def welcome(self):
         self.log(self.MESSAGES[constants.WELCOME])
+
+    def notify_for_computer_turn(self):
+        self.log(self.MESSAGES[constants.COMPUTER_TURN])
         
     def handle_cats_game(self):
         self.log(self.MESSAGES[constants.CATS])

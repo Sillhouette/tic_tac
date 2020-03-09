@@ -5,32 +5,39 @@ from src.player_builder import PlayerBuilder
 from src.validator_builder import ValidatorBuilder
 
 class App():
-    def __init__(self, cli=Cli()):
+    def __init__(self, cli=Cli(), board=None, validator=None, players=[],
+                 game=None):
         self.cli = cli
+        self.board = board
+        self.validator = validator
+        self.players = players
+        self.game = game
 
     def initialize(self):
         self.cli.welcome()
-        players = self.setup_players()
-        board = self.setup_board()
-        self.cli.set_presenter_type(board.type)
-        validator = self.setup_validator(board)
-        self.game = Game(self.cli, players, board, validator)
+        self.setup_board()
+        self.cli.set_presenter_type(self.board.type)
+        self.setup_validator()
+        self.setup_players()
+        self.game = Game(self.cli, self.players, self.board, self.validator)
         self.game.play()
         self.cli.handle_replay()
 
     def setup_players(self):
         tokens = self.cli.get_player_tokens()
-        builder = PlayerBuilder()
+        builder = PlayerBuilder(self.validator, self.board, self.cli)
         players = builder.build_players(tokens)
-        return players
+
+        self.players = players
 
     def setup_board(self):
         board_type = self.cli.get_board_type()
         builder = BoardBuilder()
         board = builder.build_board(board_type)
-        return board
+        self.board = board
 
-    def setup_validator(self, board):
+    def setup_validator(self):
         builder = ValidatorBuilder()
 
-        return builder.build_validator(board)
+        self.validator = builder.build_validator(self.board)
+

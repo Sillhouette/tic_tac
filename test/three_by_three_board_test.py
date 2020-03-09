@@ -170,6 +170,25 @@ class ThreeByThreeBoardTest(unittest.TestCase):
 
         self.assertEqual(expected, actual)
 
+    def test_get_valid_moves_returns_list_of_valid_moves_when_board_empty(self):
+        board = ThreeByThreeBoard()
+        expected = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+        actual = board.get_valid_moves()
+
+        self.assertEqual(expected, actual)
+    
+    def test_get_valid_moves_returns_list_of_valid_moves_when_board_not_empty(self):
+        board = ThreeByThreeBoard()
+        board.update(4, "X")
+        board.update(5, "O")
+        expected = [1, 2, 3, 6, 7, 8, 9]
+
+        actual = board.get_valid_moves()
+
+        self.assertEqual(expected, actual)
+
+
     def test_valid_move_returns_true_when_valid(self):
         board = ThreeByThreeBoard()
         move = "1"
