@@ -21,8 +21,7 @@ class Game:
         self.cli.print_board(self.board)
         while(self.game_in_process):
             current_player = self.current_player()
-            player_choice = current_player.get_move()
-            selected_action, move = player_choice
+            selected_action, move = current_player.get_move()
             result = self.actions[selected_action](move, current_player.token)
             if not self.player_chose_exit(result): self.cli.print_board(self.board)
             if self.game_over(result): self.game_in_process = False
