@@ -21,7 +21,7 @@ class Game:
         result = None
         self.cli.print_board(self.board)
         while(self.game_in_process):
-            current_player = self.current_player()
+            current_player = self.processor.current_player()
             selected_action, move = current_player.get_move()
             result = self.actions[selected_action](move, current_player.token)
             if not self.player_chose_exit(result): self.cli.print_board(self.board)
@@ -34,9 +34,4 @@ class Game:
 
     def game_over(self, result):
         return result in self.possible_results
-        
-    def current_player(self):
-        num_players = len(self.players)
-        turns_taken = self.board.turn_count()
-        return self.players[turns_taken % num_players]
 
