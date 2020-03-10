@@ -1,13 +1,13 @@
 import src.constants as constants
 
 class ThreeByThreeValidator():
-    def __init__(self, board):
-        self.board = board
+    def __init__(self, processor):
+        self.processor = processor
 
     def validate(self, move):
         move = move.lower()
         if self.validate_input(move):
-            return self.board.generate_move_action(move)
+            return self.processor.generate_move_action(move)
 
         return [constants.ERROR, move]
 

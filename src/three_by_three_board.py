@@ -1,17 +1,6 @@
 import src.constants as constants
 
 class ThreeByThreeBoard():
-    # => All of the possible winning combinations
-    WIN_COMBINATIONS = {
-        "Top Row": [0, 1, 2],
-        "Middle Row": [3, 4, 5],
-        "Bottom Row": [6, 7, 8],
-        "First Column": [0, 3, 6],
-        "Second Column": [1, 4, 7],
-        "Third Column": [2, 5, 8],
-        "Left to Right Diagonal": [0, 4, 8],
-        "Right to Left Diagonal": [2, 4, 6]
-    }
 
     def __init__(self):
         self.type = constants.THREE_BY_THREE 
@@ -20,29 +9,15 @@ class ThreeByThreeBoard():
 
     def turn_count(self):
         return self.size - self.spaces.count(None)
-    
-    def move_result(self, move, token):
-        self.update(move, token)
-        winner = self.winner()
-        if winner: return winner
-        elif self.full(): return constants.CATS 
 
     def full(self):
         return not None in self.spaces
 
-    def update(self, move, token):
-        index = self.move_to_index(move)
+    def update(self, index, token):
         self.spaces[index] = token
 
-    def move_to_index(self, move):
-        return int(move) - 1
-
-    def get_valid_moves(self):
-        return [index + 1 for index, space in enumerate(self.spaces) if space == None]
-
-    def valid_move(self, move):
-        position = self.move_to_index(move)
-        return self.within_board(position) and not self.position_taken(position)
+    def token_at(self, position):
+        return self.spaces[position]
 
     def position_taken(self, position):
         return self.spaces[position] != None
@@ -50,24 +25,3 @@ class ThreeByThreeBoard():
     def within_board(self, position):
         return position >= 0 and position <= self.size
 
-    def generate_move_action(self, move):
-        if move == constants.EXIT:
-            return [constants.EXIT, None]
-        elif self.valid_move(move):
-            return [constants.MOVE, move]
-        
-        return [constants.ERROR, move]
-
-    def compare_board_indicies(self, index_1, index_2):
-        return self.spaces[index_1] == self.spaces[index_2]
-
-    def winner(self):
-        winner = None
-        for combo in self.WIN_COMBINATIONS.values():
-            win_index_1, win_index_2, win_index_3 = combo
-            if self.compare_board_indicies(win_index_1, win_index_2) and\
-                self.compare_board_indicies(win_index_2, win_index_3) and\
-                self.position_taken(win_index_1):
-                winner = self.spaces[win_index_1]
-
-        return winner

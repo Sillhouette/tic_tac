@@ -29,7 +29,7 @@ class ThreeByThreePresenterTest(unittest.TestCase):
     def test_scrub_board_returns_properly_scrubbed_in_progress_board(self):
         presenter = ThreeByThreePresenter()
         board = ThreeByThreeBoard()
-        moves = ["1", "4", "7", "3"]
+        moves = [0, 3, 6, 2]
         tokens = ["X", "O", "X", "O"]
         for i, move in enumerate(moves):
             board.update(move, tokens[i])

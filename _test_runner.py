@@ -11,6 +11,7 @@ from test.app_test import AppTest
 from test.player_builder_test import PlayerBuilderTest
 from test.validator_builder_test import ValidatorBuilderTest
 from test.three_by_three_presenter_test import ThreeByThreePresenterTest
+from test.three_by_three_processor_test import ThreeByThreeProcessorTest
 
 def suite():
     suite = unittest.TestSuite()
@@ -25,6 +26,7 @@ def suite():
     suite.addTests(unittest.TestLoader().loadTestsFromTestCase(ThreeByThreeBoardTest))
     suite.addTests(unittest.TestLoader().loadTestsFromTestCase(ValidatorBuilderTest))
     suite.addTests(unittest.TestLoader().loadTestsFromTestCase(ThreeByThreePresenterTest))
+    suite.addTests(unittest.TestLoader().loadTestsFromTestCase(ThreeByThreeProcessorTest))
     return suite
 
 if __name__ == '__main__':

@@ -6,6 +6,7 @@ from unittest.mock import Mock
 from src.human_player import HumanPlayer as Player
 from src.three_by_three_board import ThreeByThreeBoard
 from src.three_by_three_validator import ThreeByThreeValidator
+from src.three_by_three_processor import ThreeByThreeProcessor
 
 class HumanPlayerTest(unittest.TestCase):
     def test_player_name(self):
@@ -41,7 +42,8 @@ class HumanPlayerTest(unittest.TestCase):
     def test_get_move_returns_only_valid_moves(self):
         cli = Mock()
         board = ThreeByThreeBoard()
-        validator = ThreeByThreeValidator(board)
+        processor = ThreeByThreeProcessor(board)
+        validator = ThreeByThreeValidator(processor)
         cli.request_move = Mock()
         moves = ["1", "55", "exit", "gibberish"]
         cli.request_move.side_effect = moves 
@@ -64,7 +66,8 @@ class HumanPlayerTest(unittest.TestCase):
     def test_validate_move_properly_validates_various_choices(self):
         cli = Mock()
         board = ThreeByThreeBoard()
-        validator = ThreeByThreeValidator(board)
+        processor = ThreeByThreeProcessor(board)
+        validator = ThreeByThreeValidator(processor)
         player = Player(cli, validator)
         moves = ["9", "357", "exit", "chuck norris wins"]
         expected_list = [

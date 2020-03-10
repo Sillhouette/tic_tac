@@ -61,7 +61,7 @@ class AppTest(unittest.TestCase):
 
         app.setup_validator.assert_called()
     
-    @patch.object(Game, "__init__", lambda a, b, c, d, e: None)
+    @patch.object(Game, "__init__", lambda a, b, c, d, e, f: None)
     @patch.object(Game, "play")
     def test_initialize_starts_game(self, game_play):
         cli = Mock()
@@ -80,6 +80,7 @@ class AppTest(unittest.TestCase):
         cli.get_board_type.return_value = constants.THREE_BY_THREE
         app = App(cli)
         app.setup_board()
+        app.setup_processor()
         app.setup_validator()
         expected_length = 2
         expected_is_players = True

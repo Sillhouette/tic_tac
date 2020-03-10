@@ -11,7 +11,8 @@ class GameTest(unittest.TestCase):
         players = [player_1, player_2]
         board = Mock()
         validator = Mock()
-        game = Game(cli, players, board, validator)
+        processor = Mock()
+        game = Game(cli, players, board, validator, processor)
         expected = False
 
         actual = game.player_chose_exit(constants.MOVE)
@@ -25,7 +26,8 @@ class GameTest(unittest.TestCase):
         players = [player_1, player_2]
         board = Mock()
         validator = Mock()
-        game = Game(cli, players, board, validator)
+        processor = Mock()
+        game = Game(cli, players, board, validator, processor)
         expected = True
 
         actual = game.player_chose_exit(constants.EXIT)
@@ -43,7 +45,8 @@ class GameTest(unittest.TestCase):
         players = [player_1, player_2]
         board = Mock()
         validator = Mock()
-        game = Game(cli, players, board, validator)
+        processor = Mock()
+        game = Game(cli, players, board, validator, processor)
         expected = True
 
         actual = game.game_over(constants.EXIT)
@@ -61,7 +64,8 @@ class GameTest(unittest.TestCase):
         players = [player_1, player_2]
         board = Mock()
         validator = Mock()
-        game = Game(cli, players, board, validator)
+        processor = Mock()
+        game = Game(cli, players, board, validator, processor)
         expected = True
 
         actual = game.game_over(constants.CATS)
@@ -79,7 +83,8 @@ class GameTest(unittest.TestCase):
         players = [player_1, player_2]
         board = Mock()
         validator = Mock()
-        game = Game(cli, players, board, validator)
+        processor = Mock()
+        game = Game(cli, players, board, validator, processor)
         bad_input = "Gibberish"
         expected = False
 
@@ -93,9 +98,10 @@ class GameTest(unittest.TestCase):
         player_1, player_2 = Mock(), Mock()
         players = [player_1, player_2]
         board = Mock()
+        processor = Mock()
         board.turn_count = Mock()
         board.turn_count.return_value = 5
-        game = Game(cli, players, board, validator)
+        game = Game(cli, players, board, validator, processor)
         expected = player_2
 
         actual = game.current_player()
@@ -108,9 +114,10 @@ class GameTest(unittest.TestCase):
         player_1, player_2 = Mock(), Mock()
         players = [player_1, player_2]
         board = Mock()
+        processor = Mock()
         board.turn_count = Mock()
         board.turn_count.return_value = 8
-        game = Game(cli, players, board, validator)
+        game = Game(cli, players, board, validator, processor)
         expected = player_1
 
         actual = game.current_player()
