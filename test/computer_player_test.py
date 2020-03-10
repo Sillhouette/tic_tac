@@ -7,9 +7,10 @@ from src.three_by_three_processor import ThreeByThreeProcessor
 
 class ComputerPlayerTest(unittest.TestCase):
     def test_setting_computer_player_token(self):
-        board = Mock()
+        processor = Mock()
         cli = Mock()
-        computer = ComputerPlayer(board, cli)
+        minimax = Mock()
+        computer = ComputerPlayer(processor, cli, minimax)
         token = "%"
         expected = token
 
@@ -22,14 +23,16 @@ class ComputerPlayerTest(unittest.TestCase):
         board = ThreeByThreeBoard()
         processor = ThreeByThreeProcessor(board)
         cli = Mock()
-        computer = ComputerPlayer(processor, cli)
+        minimax = Mock()
+        computer = ComputerPlayer(processor, cli, minimax)
         expected = True
 
         for space in board.spaces:
-            move = computer.get_move()[1]
+            move = computer.get_random_move()[1]
             index = processor.move_to_index(move)
             if not board.position_taken(index):
                 board.update(index, computer.token)
         actual = board.full()
 
         self.assertEqual(expected, actual)
+
