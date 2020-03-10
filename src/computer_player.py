@@ -1,6 +1,7 @@
 import random
 import src.constants as constants
 import time
+import math
 
 from src.minimax import Minimax
 
@@ -24,9 +25,10 @@ class ComputerPlayer():
     def get_best_move(self):
         start_time = time.time()
         self.cli.notify_for_computer_turn()
-        best_score = float("-inf")
+        valid_moves = self.processor.get_valid_moves()
+        best_score = -math.inf
         best_move = None
-        for move in self.processor.get_valid_moves():
+        for move in valid_moves:
             self.processor.execute_move(move, self.token)
             score = self.minimax.execute(0, False)
             self.processor.execute_move(move, None)
@@ -34,7 +36,7 @@ class ComputerPlayer():
                 best_score = score
                 best_move = move
 
-        #print("Computer took:", time.time() - start_time, "to make a move")
+        print("Computer took:", time.time() - start_time, "to make a move")
         return [constants.MOVE, str(best_move)]
 
     def get_random_move(self):

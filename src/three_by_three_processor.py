@@ -41,7 +41,7 @@ class ThreeByThreeProcessor():
 
     def cats_game(self):
         return self.board.full() and not self.winner()
- 
+
     def current_player(self):
         num_players = len(self.players)
         turns_taken = self.board.turn_count()
