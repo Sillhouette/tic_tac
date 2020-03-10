@@ -26,7 +26,6 @@ class ThreeByThreeProcessorTest(unittest.TestCase):
 
         self.assertEqual(expected, actual)
 
-
     def test_execute_move_returns_none_when_game_not_over(self):
         board = ThreeByThreeBoard()
         processor = ThreeByThreeProcessor(board)
@@ -55,6 +54,38 @@ class ThreeByThreeProcessorTest(unittest.TestCase):
 
         self.assertEqual(expected_return, actual_return)
         self.assertEqual(expected_board, actual_board)
+
+    def test_current_player_returns_current_player_on_turn_5(self):
+        cli = Mock()
+        validator = Mock()
+        player_1, player_2 = Mock(), Mock()
+        players = [player_1, player_2]
+        board = Mock()
+        processor = ThreeByThreeProcessor(board)
+        processor.set_players(players)
+        board.turn_count = Mock()
+        board.turn_count.return_value = 5
+        expected = player_2
+
+        actual = processor.current_player()
+
+        self.assertEqual(expected, actual)
+
+    def test_current_player_returns_current_player_on_turn_8(self):
+        cli = Mock()
+        validator = Mock()
+        player_1, player_2 = Mock(), Mock()
+        players = [player_1, player_2]
+        board = Mock()
+        processor = ThreeByThreeProcessor(board)
+        processor.set_players(players)
+        board.turn_count = Mock()
+        board.turn_count.return_value = 8
+        expected = player_1
+
+        actual = processor.current_player()
+
+        self.assertEqual(expected, actual)
 
     def test_move_result_returns_CATS_when_board_full(self):
         board = ThreeByThreeBoard()

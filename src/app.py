@@ -42,10 +42,8 @@ class App():
 
     def setup_validator(self):
         builder = ValidatorBuilder()
-
         self.validator = builder.build_validator(self.processor)
 
     def setup_processor(self):
         builder = ProcessorBuilder()
-
         self.processor = builder.build_processor(self.board)
