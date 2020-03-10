@@ -22,6 +22,7 @@ class App():
         self.setup_processor()
         self.setup_validator()
         self.setup_players()
+        self.processor.set_players(self.players)
         self.game = Game(self.cli, self.players, self.board, self.validator, self.processor)
         self.game.play()
         self.cli.handle_replay()
