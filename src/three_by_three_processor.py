@@ -42,13 +42,20 @@ class ThreeByThreeProcessor():
     def cats_game(self):
         return self.board.full() and not self.winner()
 
+    def get_player_tokens(self):
+        return [player.token for player in self.players]
+
     def current_player(self):
         num_players = len(self.players)
         turns_taken = self.board.turn_count()
         return self.players[turns_taken % num_players]
 
-    def other_player(self):
-        return [player for player in self.players if player != self.current_player()][0]
+    def next_player_index(self, current_player_index):
+        num_players = len(self.players)
+        if current_player_index == num_players - 1:
+            return 0 
+        else:
+            return current_player_index + 1
 
     def generate_move_action(self, move):
         if move == constants.EXIT:

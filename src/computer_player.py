@@ -10,11 +10,16 @@ class ComputerPlayer():
         self.token = token
         self.processor = processor
         self.cli = cli
-        self.minimax = Minimax(processor, self.token)
         self.difficulty = difficulty
         
     def set_token(self, token):
         self.token = token
+
+    def get_index(self):
+        return self.processor.players.index(self)
+
+    def set_minimax(self):
+        self.minimax = Minimax(self.processor, self.get_index())
 
     def get_move(self):
         if self.difficulty == "hard":
@@ -23,14 +28,16 @@ class ComputerPlayer():
             return self.get_random_move()
 
     def get_best_move(self):
+        self.set_minimax()
         start_time = time.time()
         self.cli.notify_for_computer_turn()
+        next_player_index = self.processor.next_player_index(self.get_index())
         valid_moves = self.processor.get_valid_moves()
         best_score = -math.inf
         best_move = None
         for move in valid_moves:
             self.processor.execute_move(move, self.token)
-            score = self.minimax.execute(0, False)
+            score = self.minimax.execute(0, next_player_index)
             self.processor.execute_move(move, None)
             if score > best_score:
                 best_score = score
