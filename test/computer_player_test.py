@@ -9,8 +9,7 @@ class ComputerPlayerTest(unittest.TestCase):
     def test_setting_computer_player_token(self):
         processor = Mock()
         cli = Mock()
-        minimax = Mock()
-        computer = ComputerPlayer(processor, cli, minimax)
+        computer = ComputerPlayer(processor, cli)
         token = "%"
         expected = token
 
@@ -19,20 +18,36 @@ class ComputerPlayerTest(unittest.TestCase):
 
         self.assertEqual(expected, actual)
 
-    def test_get_move_returns_a_valid_move_every_turn(self):
-        board = ThreeByThreeBoard()
-        processor = ThreeByThreeProcessor(board)
+    def test_get_index_returns_index_of_computer_player(self):
+        processor = Mock()
         cli = Mock()
-        minimax = Mock()
-        computer = ComputerPlayer(processor, cli, minimax)
-        expected = True
+        computer = ComputerPlayer(processor, cli)
+        processor.players = [computer]
+        expected = 0
 
-        for space in board.spaces:
-            move = computer.get_random_move()[1]
-            index = processor.move_to_index(move)
-            if not board.position_taken(index):
-                board.update(index, computer.token)
-        actual = board.full()
+        actual = computer.get_index()
 
         self.assertEqual(expected, actual)
 
+    def test_get_index_returns_index_of_computer_player_2(self):
+        processor = Mock()
+        cli = Mock()
+        computer = ComputerPlayer(processor, cli)
+        human = Mock()
+        processor.players = [human, computer]
+        expected = 1
+
+        actual = computer.get_index()
+
+        self.assertEqual(expected, actual)
+
+    def test_get_move_invokes_strategy_execute(self):
+        processor = Mock()
+        cli = Mock()
+        computer = ComputerPlayer(processor, cli)
+        computer.strategy = Mock()
+        computer.strategy.execute = Mock()
+
+        computer.get_move()
+
+        computer.strategy.execute.assert_called()

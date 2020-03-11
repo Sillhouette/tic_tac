@@ -25,6 +25,9 @@ class ThreeByThreeProcessor():
     def get_valid_moves(self):
         return [index + 1 for index, space in enumerate(self.board.spaces) if space == None]
 
+    def get_taken_positions(self):
+        return [index for index, space in enumerate(self.board.spaces) if space != None]
+
     def valid_move(self, move):
         position = self.move_to_index(move)
         return self.board.within_board(position) and not self.board.position_taken(position)

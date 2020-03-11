@@ -1,55 +1,28 @@
 import random
-import src.constants as constants
 import time
 import math
 
-from src.minimax import Minimax
+import src.constants as constants
+from src.strategy_builder import StrategyBuilder
 
 class ComputerPlayer():
-    def __init__(self, processor, cli, token="O", difficulty="hard"):
+    def __init__(self, processor, cli, token="O", difficulty=constants.HARD):
         self.token = token
         self.processor = processor
         self.cli = cli
-        self.difficulty = difficulty
+        self.strategy = self.set_strategy(difficulty)
         
     def set_token(self, token):
         self.token = token
 
+    def set_strategy(self, difficulty):
+        strategy_builder = StrategyBuilder(self.processor, self)
+        return strategy_builder.build(difficulty)
+
     def get_index(self):
         return self.processor.players.index(self)
 
-    def set_minimax(self):
-        self.minimax = Minimax(self.processor, self.get_index())
-
     def get_move(self):
-        if self.difficulty == "hard":
-            return self.get_best_move()
-        else:
-            return self.get_random_move()
-
-    def get_best_move(self):
-        self.set_minimax()
-        start_time = time.time()
         self.cli.notify_for_computer_turn()
-        next_player_index = self.processor.next_player_index(self.get_index())
-        valid_moves = self.processor.get_valid_moves()
-        best_score = -math.inf
-        best_move = None
-        for move in valid_moves:
-            self.processor.execute_move(move, self.token)
-            score = self.minimax.execute(0, next_player_index)
-            self.processor.execute_move(move, None)
-            if score > best_score:
-                best_score = score
-                best_move = move
-
-        print("Computer took:", time.time() - start_time, "to make a move")
-        return [constants.MOVE, str(best_move)]
-
-    def get_random_move(self):
-        self.cli.notify_for_computer_turn()
-
-        choice = random.choice(self.processor.get_valid_moves())
-
-        return [constants.MOVE, str(choice)]
+        return self.strategy.execute()
 
