@@ -3,11 +3,10 @@ import src.constants as constants
 from src.cli import Cli
 
 class Game:
-    def __init__(self, cli, players, board, validator, processor):
+    def __init__(self, cli, players, board, processor):
         self.cli = cli
         self.players = players
         self.board = board
-        self.validator = validator
         self.processor = processor
         self.game_in_process = True
         self.possible_results = self.cli.build_possible_results(self.players)
