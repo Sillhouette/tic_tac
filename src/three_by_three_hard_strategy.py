@@ -43,9 +43,8 @@ class ThreeByThreeHardStrategy():
         best_score = -math.inf
         best_move = None
         for move in valid_moves:
-            self.processor.execute_move(move, self.computer_player.token)
-            score = self.minimax.execute(0, next_player_index)
-            self.processor.execute_move(move, None)
+            score = self.minimax.execute(move, 0, self.computer_player.token,
+                                    next_player_index)
             if score > best_score:
                 best_score = score
                 best_move = move
