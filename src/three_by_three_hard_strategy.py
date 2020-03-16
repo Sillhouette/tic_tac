@@ -1,5 +1,5 @@
-import time
 import math
+
 import src.constants as constants
 
 from src.minimax import Minimax
@@ -37,7 +37,6 @@ class ThreeByThreeHardStrategy():
         return self.get_best_move()
 
     def get_best_move(self):
-        start_time = time.time()
         next_player_index = self.processor.next_player_index(self.computer_player.get_index())
         valid_moves = self.processor.get_valid_moves()
         best_score = -math.inf
@@ -49,6 +48,5 @@ class ThreeByThreeHardStrategy():
                 best_score = score
                 best_move = move
 
-        #print("Computer took:", time.time() - start_time, "to make a move")
         return [constants.MOVE, str(best_move)]
 

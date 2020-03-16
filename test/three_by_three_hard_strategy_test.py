@@ -1,4 +1,6 @@
 import unittest
+import random
+import time
 
 import src.constants as constants
 
@@ -75,10 +77,9 @@ class ThreeByThreeHardStrategyTest(unittest.TestCase):
         players = [player_1, player_2]
         processor.set_players(players)
         strat = ThreeByThreeHardStrategy(processor, player_2)
-        strat.set_minimax()
         expected = [constants.MOVE, "3"]
 
-        actual = strat.get_best_move()
+        actual = strat.execute()
 
         self.assertEqual(expected, actual)
     
@@ -91,10 +92,66 @@ class ThreeByThreeHardStrategyTest(unittest.TestCase):
         players = [player_1, player_2]
         processor.set_players(players)
         strat = ThreeByThreeHardStrategy(processor, player_2)
-        strat.set_minimax()
         expected = [constants.MOVE, "3"]
 
-        actual = strat.get_best_move()
+        actual = strat.execute()
 
         self.assertEqual(expected, actual)
+
+    def test_computer_makes_instantaneous_fourth_move(self):
+        board = ThreeByThreeBoard()
+        board.spaces = ["X", None, "X", None, "O", None, None, None, None]
+        processor = ThreeByThreeProcessor(board)
+        player_1 = HumanPlayer(Mock(), Mock())
+        player_2 = ComputerPlayer(processor, Mock())
+        players = [player_1, player_2]
+        processor.set_players(players)
+        strat = ThreeByThreeHardStrategy(processor, player_2)
+        expected = 0.06
+
+        actual = self.benchmark(strat.execute)
+
+        self.assertGreaterEqual(expected, actual)
+
+    def test_computer_makes_instantaneous_second_move(self):
+        board = ThreeByThreeBoard()
+        board.spaces = ["X", None, None, None, None, None, None, None, None]
+        processor = ThreeByThreeProcessor(board)
+        player_1 = HumanPlayer(Mock(), Mock())
+        player_2 = ComputerPlayer(processor, Mock())
+        players = [player_1, player_2]
+        processor.set_players(players)
+        strat = ThreeByThreeHardStrategy(processor, player_2)
+        expected = 0.06
+
+        actual = self.benchmark(strat.execute)
+
+        self.assertGreaterEqual(expected, actual)
+
+    def test_computer_makes_instantaneous_moves(self):
+        board = ThreeByThreeBoard()
+        processor = ThreeByThreeProcessor(board)
+        player_1 = HumanPlayer(Mock(), Mock())
+        player_2 = ComputerPlayer(processor, Mock())
+        players = [player_1, player_2]
+        processor.set_players(players)
+        strat = ThreeByThreeHardStrategy(processor, player_2)
+        num_turns_until_algorithm = range(2)
+        expected = 0.5
+        actuals = []
+
+        for turn_set in num_turns_until_algorithm:
+            human_move = str(random.choice(processor.get_valid_moves()))
+            processor.execute_move(human_move, player_1.token)
+            actuals.append(self.benchmark(strat.execute))
+        board.spaces = [None] * 9
+
+        for index, actual in enumerate(actuals):
+            self.assertGreaterEqual(expected, actual,
+                                    msg=f"Failed on turn number {index + 1}")
+
+    def benchmark(self, method):
+        start_time = time.time()
+        method()
+        return time.time() - start_time
 
