@@ -3,11 +3,10 @@ import src.constants as constants
 from src.cli import Cli
 
 class Game:
-    def __init__(self, cli, players, board, validator, processor):
+    def __init__(self, cli, players, board, processor):
         self.cli = cli
         self.players = players
         self.board = board
-        self.validator = validator
         self.processor = processor
         self.game_in_process = True
         self.possible_results = self.cli.build_possible_results(self.players)
@@ -21,7 +20,7 @@ class Game:
         result = None
         self.cli.print_board(self.board)
         while(self.game_in_process):
-            current_player = self.current_player()
+            current_player = self.processor.current_player()
             selected_action, move = current_player.get_move()
             result = self.actions[selected_action](move, current_player.token)
             if not self.player_chose_exit(result): self.cli.print_board(self.board)
@@ -34,9 +33,4 @@ class Game:
 
     def game_over(self, result):
         return result in self.possible_results
-        
-    def current_player(self):
-        num_players = len(self.players)
-        turns_taken = self.board.turn_count()
-        return self.players[turns_taken % num_players]
 

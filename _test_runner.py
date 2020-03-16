@@ -12,6 +12,10 @@ from test.player_builder_test import PlayerBuilderTest
 from test.validator_builder_test import ValidatorBuilderTest
 from test.three_by_three_presenter_test import ThreeByThreePresenterTest
 from test.three_by_three_processor_test import ThreeByThreeProcessorTest
+from test.minimax_test import MinimaxTest
+from test.strategy_builder_test import StrategyBuilderTest
+from test.three_by_three_easy_strategy_test import ThreeByThreeEasyStrategyTest
+from test.three_by_three_hard_strategy_test import ThreeByThreeHardStrategyTest
 
 def suite():
     suite = unittest.TestSuite()
@@ -27,6 +31,11 @@ def suite():
     suite.addTests(unittest.TestLoader().loadTestsFromTestCase(ValidatorBuilderTest))
     suite.addTests(unittest.TestLoader().loadTestsFromTestCase(ThreeByThreePresenterTest))
     suite.addTests(unittest.TestLoader().loadTestsFromTestCase(ThreeByThreeProcessorTest))
+    suite.addTests(unittest.TestLoader().loadTestsFromTestCase(MinimaxTest))
+    suite.addTests(unittest.TestLoader().loadTestsFromTestCase(StrategyBuilderTest))
+    suite.addTests(unittest.TestLoader().loadTestsFromTestCase(ThreeByThreeEasyStrategyTest))
+    suite.addTests(unittest.TestLoader().loadTestsFromTestCase(ThreeByThreeHardStrategyTest))
+
     return suite
 
 if __name__ == '__main__':

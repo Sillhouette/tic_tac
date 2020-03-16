@@ -22,7 +22,8 @@ class App():
         self.setup_processor()
         self.setup_validator()
         self.setup_players()
-        self.game = Game(self.cli, self.players, self.board, self.validator, self.processor)
+        self.processor.set_players(self.players)
+        self.game = Game(self.cli, self.players, self.board, self.processor)
         self.game.play()
         self.cli.handle_replay()
 
@@ -41,10 +42,8 @@ class App():
 
     def setup_validator(self):
         builder = ValidatorBuilder()
-
         self.validator = builder.build_validator(self.processor)
 
     def setup_processor(self):
         builder = ProcessorBuilder()
-
         self.processor = builder.build_processor(self.board)

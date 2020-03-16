@@ -26,6 +26,74 @@ class ThreeByThreeProcessorTest(unittest.TestCase):
 
         self.assertEqual(expected, actual)
 
+    def test_get_taken_positions_returns_single_taken_position(self):
+        board = ThreeByThreeBoard()
+        position = 1
+        board.update(position, "X")
+        processor = ThreeByThreeProcessor(board)
+        expected = [position]
+
+        actual = processor.get_taken_positions()
+
+        self.assertEqual(expected, actual)
+
+    def test_get_taken_positions_returns_taken_position_list(self):
+        board = ThreeByThreeBoard()
+        positions = [1, 2, 3, 4]
+        for position in positions:
+            board.update(position, "X")
+        processor = ThreeByThreeProcessor(board)
+        expected = positions
+
+        actual = processor.get_taken_positions()
+
+        self.assertEqual(expected, actual)
+
+    def test_get_player_tokens_returns_player_tokens(self):
+        board = Mock()
+        processor = ThreeByThreeProcessor(board)
+        player_1, player_2 = [Mock(), Mock()]
+        tokens = ["X", "O"]
+        player_1.token = tokens[0]
+        player_2.token = tokens[1]
+        processor.set_players([player_1, player_2])
+        expected = tokens
+
+        actual = processor.get_player_tokens()
+
+        self.assertEqual(expected, actual)
+
+    def test_next_player_index_returns_next_players_index(self):
+        board = Mock()
+        processor = ThreeByThreeProcessor(board)
+        player_1, player_2 = [Mock(), Mock()]
+        tokens = ["X", "O"]
+        player_1.token = tokens[0]
+        player_2.token = tokens[1]
+        current_player_index = 0
+        next_player_index = 1
+        processor.set_players([player_1, player_2])
+        expected = next_player_index
+
+        actual = processor.next_player_index(current_player_index)
+
+        self.assertEqual(expected, actual)
+
+    def test_next_player_index_returns_first_players_index(self):
+        board = Mock()
+        processor = ThreeByThreeProcessor(board)
+        player_1, player_2 = [Mock(), Mock()]
+        tokens = ["X", "O"]
+        player_1.token = tokens[0]
+        player_2.token = tokens[1]
+        current_player_index = 1
+        next_player_index = 0
+        processor.set_players([player_1, player_2])
+        expected = next_player_index
+
+        actual = processor.next_player_index(current_player_index)
+
+        self.assertEqual(expected, actual)
 
     def test_execute_move_returns_none_when_game_not_over(self):
         board = ThreeByThreeBoard()
@@ -55,6 +123,38 @@ class ThreeByThreeProcessorTest(unittest.TestCase):
 
         self.assertEqual(expected_return, actual_return)
         self.assertEqual(expected_board, actual_board)
+
+    def test_current_player_returns_current_player_on_turn_5(self):
+        cli = Mock()
+        validator = Mock()
+        player_1, player_2 = Mock(), Mock()
+        players = [player_1, player_2]
+        board = Mock()
+        processor = ThreeByThreeProcessor(board)
+        processor.set_players(players)
+        board.turn_count = Mock()
+        board.turn_count.return_value = 5
+        expected = player_2
+
+        actual = processor.current_player()
+
+        self.assertEqual(expected, actual)
+
+    def test_current_player_returns_current_player_on_turn_8(self):
+        cli = Mock()
+        validator = Mock()
+        player_1, player_2 = Mock(), Mock()
+        players = [player_1, player_2]
+        board = Mock()
+        processor = ThreeByThreeProcessor(board)
+        processor.set_players(players)
+        board.turn_count = Mock()
+        board.turn_count.return_value = 8
+        expected = player_1
+
+        actual = processor.current_player()
+
+        self.assertEqual(expected, actual)
 
     def test_move_result_returns_CATS_when_board_full(self):
         board = ThreeByThreeBoard()
@@ -177,3 +277,34 @@ class ThreeByThreeProcessorTest(unittest.TestCase):
         actual = processor.winner()
 
         self.assertEqual(expected, actual)
+
+    def test_generate_move_action_returns_proper_action_when_given_move(self):
+        board = ThreeByThreeBoard()
+        processor = ThreeByThreeProcessor(board)
+        move = "5"
+        expected = [constants.MOVE, move]
+
+        actual = processor.generate_move_action(move)
+
+        self.assertEqual(expected, actual)
+
+    def test_generate_move_action_returns_error_action_when_given_invalid_move(self):
+        board = ThreeByThreeBoard()
+        processor = ThreeByThreeProcessor(board)
+        move = "55"
+        expected = [constants.ERROR, move]
+
+        actual = processor.generate_move_action(move)
+
+        self.assertEqual(expected, actual)
+
+    def test_generate_move_action_returns_exit_action_when_given_exit(self):
+        board = ThreeByThreeBoard()
+        processor = ThreeByThreeProcessor(board)
+        move = "exit"
+        expected = [constants.EXIT, None]
+
+        actual = processor.generate_move_action(move)
+
+        self.assertEqual(expected, actual)
+

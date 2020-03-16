@@ -16,11 +16,17 @@ class ThreeByThreeProcessor():
     def __init__(self, board):
         self.board = board
 
+    def set_players(self, players):
+        self.players = players
+
     def move_to_index(self, move):
         return int(move) - 1
 
     def get_valid_moves(self):
         return [index + 1 for index, space in enumerate(self.board.spaces) if space == None]
+
+    def get_taken_positions(self):
+        return [index for index, space in enumerate(self.board.spaces) if space != None]
 
     def valid_move(self, move):
         position = self.move_to_index(move)
@@ -38,6 +44,21 @@ class ThreeByThreeProcessor():
 
     def cats_game(self):
         return self.board.full() and not self.winner()
+
+    def get_player_tokens(self):
+        return [player.token for player in self.players]
+
+    def current_player(self):
+        num_players = len(self.players)
+        turns_taken = self.board.turn_count()
+        return self.players[turns_taken % num_players]
+
+    def next_player_index(self, current_player_index):
+        num_players = len(self.players)
+        if current_player_index == num_players - 1:
+            return 0 
+        else:
+            return current_player_index + 1
 
     def generate_move_action(self, move):
         if move == constants.EXIT:

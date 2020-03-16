@@ -61,7 +61,7 @@ class AppTest(unittest.TestCase):
 
         app.setup_validator.assert_called()
     
-    @patch.object(Game, "__init__", lambda a, b, c, d, e, f: None)
+    @patch.object(Game, "__init__", lambda a, b, c, d, e: None)
     @patch.object(Game, "play")
     def test_initialize_starts_game(self, game_play):
         cli = Mock()
