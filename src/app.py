@@ -1,3 +1,4 @@
+import sys
 import src.constants as constants
 
 from src.cli import Cli
@@ -24,9 +25,6 @@ class App():
         self.setup_processor()
         self.setup_validator()
         self.setup_players()
-        if self.players == constants.EXIT:
-            self.cli.handle_exit()
-            return
         self.processor.set_players(self.players)
         self.game = Game(self.cli, self.players, self.board, self.processor)
         self.game.play()
@@ -36,7 +34,7 @@ class App():
         tokens = self.cli.get_player_tokens()
         builder = PlayerBuilder(self.validator, self.processor, self.cli)
         players = builder.build_players(tokens)
-
+        if players == constants.EXIT: self.exit_app()
         self.players = players
 
     def setup_board(self):
@@ -52,3 +50,7 @@ class App():
     def setup_processor(self):
         builder = ProcessorBuilder()
         self.processor = builder.build_processor(self.board)
+
+    def exit_app(self):
+        self.cli.handle_exit()
+        sys.exit()

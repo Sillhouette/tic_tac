@@ -8,6 +8,7 @@ from src.human_player import HumanPlayer as Player
 from src.three_by_three_board import ThreeByThreeBoard
 from src.three_by_three_validator import ThreeByThreeValidator
 from src.player_builder import PlayerBuilder
+from src.cli import Cli
 
 class AppTest(unittest.TestCase):
     @patch.object(Game, "play")
@@ -20,16 +21,18 @@ class AppTest(unittest.TestCase):
 
         cli.welcome.assert_called()
 
+    @patch.object(PlayerBuilder, "build_players")
     @patch.object(Game, "play")
-    def test_initialize_exits_if_player_chooses_exit(self, game_play):
-        cli = Mock()
+    def test_initialize_exits_if_player_chooses_exit(self, game_play,
+                                                     build_players):
+        build_players.return_value = constants.EXIT
+        cli = Mock(Cli)
         app = App(cli)
-        app.setup_players = Mock()
-        app.players = constants.EXIT
+        app.exit_app = Mock()
 
         app.initialize()
 
-        cli.handle_exit.assert_called()
+        app.exit_app.assert_called()
    
     @patch.object(Game, "play")
     def test_initialize_sets_players(self, game_play):
