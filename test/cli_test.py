@@ -187,6 +187,31 @@ class CliTest(unittest.TestCase):
 
         self.assertEqual(expected, actual)
 
+    def test_generate_opponent_menu(self):
+        cli = Cli()
+        expected = [
+            "  1. Player - Play against another player",
+            f"  2. {constants.COMPUTER_MODES[constants.EASY]}",
+            f"  3. {constants.COMPUTER_MODES[constants.HARD]}"
+        ]
+
+        actual = cli.generate_opponent_menu()
+
+        self.assertEqual(expected, actual)
+
+    def test_get_opponent(self):
+        reader = Mock()
+        cli = Cli(reader=reader)
+        prompt = "Choose your opponent:\n"
+        player = "  1. Player - Play against another player\n"
+        easy = f"  2. {constants.COMPUTER_MODES[constants.EASY]}\n"
+        hard = f"  3. {constants.COMPUTER_MODES[constants.HARD]}\n"
+        expected = prompt + player + easy + hard
+
+        cli.get_opponent()
+
+        cli.reader.assert_called_with(expected)
+
     def test_request_move(self):
         player = Mock()
         player.token = "X"

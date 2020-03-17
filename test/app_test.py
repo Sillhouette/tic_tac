@@ -7,6 +7,7 @@ from src.app import App
 from src.human_player import HumanPlayer as Player
 from src.three_by_three_board import ThreeByThreeBoard
 from src.three_by_three_validator import ThreeByThreeValidator
+from src.player_builder import PlayerBuilder
 
 class AppTest(unittest.TestCase):
     @patch.object(Game, "play")
@@ -18,6 +19,17 @@ class AppTest(unittest.TestCase):
         actual = app.initialize()
 
         cli.welcome.assert_called()
+
+    @patch.object(Game, "play")
+    def test_initialize_exits_if_player_chooses_exit(self, game_play):
+        cli = Mock()
+        app = App(cli)
+        app.setup_players = Mock()
+        app.players = constants.EXIT
+
+        app.initialize()
+
+        cli.handle_exit.assert_called()
    
     @patch.object(Game, "play")
     def test_initialize_sets_players(self, game_play):
@@ -72,7 +84,8 @@ class AppTest(unittest.TestCase):
 
         app.game.play.assert_called()
 
-    def test_setup_players_can_setup_players(self):
+    @patch.object(PlayerBuilder, "get_valid_choice")
+    def test_setup_players_can_setup_players(self, get_valid_choice):
         cli = Mock()
         cli.get_player_tokens = Mock()
         cli.get_board_type = Mock()
@@ -82,6 +95,7 @@ class AppTest(unittest.TestCase):
         app.setup_board()
         app.setup_processor()
         app.setup_validator()
+        get_valid_choice.return_value = "1"
         expected_length = 2
         expected_is_players = True
 

@@ -53,6 +53,21 @@ class Cli():
          turn_prompt = self.MESSAGES[constants.REQUEST_MOVE](player.token)
          return self.prompt_user(turn_prompt)
 
+    def get_opponent(self):
+        prompt = "Choose your opponent:\n"
+        for opponent in self.generate_opponent_menu():
+            prompt += opponent + "\n"
+        return self.prompt_user(prompt)
+
+    def generate_opponent_menu(self):
+        opponent_list = []
+        player = "Player - Play against another player"
+        opponents = [player] + list(constants.COMPUTER_MODES.values())
+        for index, opponent in enumerate(opponents):
+            opponent_list.append(f"  {index + 1}. {opponent}")
+
+        return opponent_list
+
     def get_player_tokens(self):
         return ["X", "O"]
 

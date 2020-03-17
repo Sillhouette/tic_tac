@@ -12,3 +12,7 @@ EMPTY_INDEX_COLOR_END = "\u001b[0m"
 COMPUTER_TURN = "computer_turn"
 HARD = "hard"
 EASY = "easy"
+COMPUTER_MODES = {
+    EASY: "Easy Computer - play against an easy computer",
+    HARD: "Hard Computer - play against a hard computer"
+}

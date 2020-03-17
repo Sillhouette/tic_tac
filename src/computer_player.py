@@ -6,7 +6,8 @@ import src.constants as constants
 from src.strategy_builder import StrategyBuilder
 
 class ComputerPlayer():
-    def __init__(self, processor, cli, token="O", difficulty=constants.HARD):
+    def __init__(self, processor, cli, token="O",
+                 difficulty=constants.HARD):
         self.token = token
         self.processor = processor
         self.cli = cli

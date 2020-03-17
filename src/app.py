@@ -1,3 +1,5 @@
+import src.constants as constants
+
 from src.cli import Cli
 from src.game import Game
 from src.board_builder import BoardBuilder
@@ -22,6 +24,9 @@ class App():
         self.setup_processor()
         self.setup_validator()
         self.setup_players()
+        if self.players == constants.EXIT:
+            self.cli.handle_exit()
+            return
         self.processor.set_players(self.players)
         self.game = Game(self.cli, self.players, self.board, self.processor)
         self.game.play()
