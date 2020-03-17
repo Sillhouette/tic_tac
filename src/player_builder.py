@@ -10,7 +10,7 @@ class PlayerBuilder():
         self.cli = cli
 
     def build_players(self, player_tokens):
-        choice = self.get_valid_choice()
+        choice = self.validator.get_valid_player_choice(self.cli)
 
         player_1 = self.build_human_player(player_tokens[0])
         if choice == "1":
@@ -22,13 +22,6 @@ class PlayerBuilder():
         else:
             return constants.EXIT
         return [player_1, player_2]
-
-    def get_valid_choice(self):
-        valid_choices = ["1", "2", "3", "exit"]
-        choice = None
-        while not choice in valid_choices:
-            choice = self.cli.get_opponent()
-        return choice
 
     def build_easy_computer(self):
         return ComputerPlayer(self.processor, self.cli,

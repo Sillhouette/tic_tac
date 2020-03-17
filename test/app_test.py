@@ -87,8 +87,7 @@ class AppTest(unittest.TestCase):
 
         app.game.play.assert_called()
 
-    @patch.object(PlayerBuilder, "get_valid_choice")
-    def test_setup_players_can_setup_players(self, get_valid_choice):
+    def test_setup_players_can_setup_players(self):
         cli = Mock()
         cli.get_player_tokens = Mock()
         cli.get_board_type = Mock()
@@ -98,7 +97,8 @@ class AppTest(unittest.TestCase):
         app.setup_board()
         app.setup_processor()
         app.setup_validator()
-        get_valid_choice.return_value = "1"
+        app.validator.get_valid_player_choice = Mock()
+        app.validator.get_valid_player_choice.return_value = "1"
         expected_length = 2
         expected_is_players = True
 

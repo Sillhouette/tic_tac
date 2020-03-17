@@ -9,6 +9,7 @@ class Cli():
         constants.EXIT: "Leaving so soon? Hope to see you back again shortly!",
         constants.CATS: "Cats game! You all played phenomenally!",
         constants.ERROR: "\nI'm sorry, it seems you may have accidently made an invalid move, can you please try another position?",
+        constants.OPTION_ERROR: "\nI'm sorry, it seems you may have accidently chosen an invalid option, can you please try another one?\n",
         constants.WIN: (lambda token: f"Congratulations {token}! you win!"),
         constants.REQUEST_MOVE: (lambda token: f"It's {token}'s turn! Please select a square using 1-9:\n"),
         constants.REPLAY: "\nTo play a new game please restart the app with the command 'python3 run_game.py'"
@@ -48,6 +49,9 @@ class Cli():
 
     def invalid_move(self):
         self.log(self.MESSAGES[constants.ERROR])
+
+    def invalid_option(self):
+        self.log(self.MESSAGES[constants.OPTION_ERROR])
 
     def request_move(self, player):
          turn_prompt = self.MESSAGES[constants.REQUEST_MOVE](player.token)
