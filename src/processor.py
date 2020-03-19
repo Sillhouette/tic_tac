@@ -1,20 +1,16 @@
 import src.constants as constants
 
-class ThreeByThreeProcessor():
-    # => All of the possible winning combinations
-    WIN_COMBINATIONS = {
-        "Top Row": [0, 1, 2],
-        "Middle Row": [3, 4, 5],
-        "Bottom Row": [6, 7, 8],
-        "First Column": [0, 3, 6],
-        "Second Column": [1, 4, 7],
-        "Third Column": [2, 5, 8],
-        "Left to Right Diagonal": [0, 4, 8],
-        "Right to Left Diagonal": [2, 4, 6]
-    }
-
+class Processor():
     def __init__(self, board):
         self.board = board
+        self.set_win_combos()
+
+    def set_win_combos(self):
+        print(self.board.type)
+        if self.board.type == constants.THREE_BY_THREE:
+            self.win_combos = constants.THREE_BY_THREE_WIN_COMBINATIONS
+        elif self.board.type == constants.THREE_DIMENSIONAL:
+            self.win_combos = constants.THREE_DIMENSIONAL_WIN_COMBINATIONS
 
     def set_players(self, players):
         self.players = players
@@ -71,14 +67,20 @@ class ThreeByThreeProcessor():
     def compare_board_indicies(self, index_1, index_2):
         return self.board.token_at(index_1) == self.board.token_at(index_2)
 
+    def check_combo(self, combo):
+        indices = range(len(combo) - 1)
+        is_equal = True
+        for index in indices:
+            if not self.compare_board_indicies(combo[index], combo[index + 1]):
+                is_equal = False
+        return is_equal
+
     def winner(self):
         winner = None
-        for combo in self.WIN_COMBINATIONS.values():
-            win_index_1, win_index_2, win_index_3 = combo
-            if self.compare_board_indicies(win_index_1, win_index_2) and\
-                self.compare_board_indicies(win_index_2, win_index_3) and\
-                self.board.position_taken(win_index_1):
-                winner = self.board.token_at(win_index_1)
+        for combo in self.win_combos.values():
+            if self.check_combo(combo) and self.board.position_taken(combo[0]):
+                winner = self.board.token_at(combo[0])
+                break;
 
         return winner
 

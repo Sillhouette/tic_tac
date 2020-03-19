@@ -2,8 +2,6 @@ import unittest
 
 from unittest.mock import Mock
 from src.computer_player import ComputerPlayer
-from src.three_by_three_board import ThreeByThreeBoard
-from src.three_by_three_processor import ThreeByThreeProcessor
 
 class ComputerPlayerTest(unittest.TestCase):
     def test_setting_computer_player_token(self):
@@ -51,3 +49,4 @@ class ComputerPlayerTest(unittest.TestCase):
         computer.get_move()
 
         computer.strategy.execute.assert_called()
+

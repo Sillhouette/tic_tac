@@ -1,10 +1,11 @@
 import unittest
+import src.constants as constants
 
-from src.three_by_three_board import ThreeByThreeBoard
+from src.board import Board
 
-class ThreeByThreeBoardTest(unittest.TestCase):
+class BoardTest(unittest.TestCase):
     def test_full_board(self):
-        board = ThreeByThreeBoard()
+        board = Board(constants.THREE_BY_THREE)
         board.spaces = ["X", "O", "X", "O", "O", "X", "O", "O", "X"]
         expected = True
 
@@ -13,7 +14,7 @@ class ThreeByThreeBoardTest(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     def test_not_full_board(self):
-        board = ThreeByThreeBoard()
+        board = Board(constants.THREE_BY_THREE)
         board.spaces = ["X", "O", None, "O", "X", None, None, "O", "X"]
         expected = False
 
@@ -22,7 +23,7 @@ class ThreeByThreeBoardTest(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     def test_update_board_places_token_correctly(self):
-        board = ThreeByThreeBoard()
+        board = Board(constants.THREE_BY_THREE)
         index = 5
         token = "O"
         expected = [None, None, None, None, None, "O", None, None, None]
@@ -33,7 +34,7 @@ class ThreeByThreeBoardTest(unittest.TestCase):
         self.assertEqual(expected, actual)
         
     def test_update_board_places_different_token_correctly(self):
-        board = ThreeByThreeBoard()
+        board = Board(constants.THREE_BY_THREE)
         index = 1
         token = "X"
         expected = [None, "X", None, None, None, None, None, None, None]
@@ -44,7 +45,7 @@ class ThreeByThreeBoardTest(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     def test_turn_count_returns_correctly_when_one_turn_made(self):
-        board = ThreeByThreeBoard()
+        board = Board(constants.THREE_BY_THREE)
         index = 1
         token = "X"
         expected = 1
@@ -56,7 +57,7 @@ class ThreeByThreeBoardTest(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     def test_turn_count_returns_correctly_when_four_turns_made(self):
-        board = ThreeByThreeBoard()
+        board = Board(constants.THREE_BY_THREE)
         expected = 4
 
         board.update(1, "X")
@@ -68,7 +69,7 @@ class ThreeByThreeBoardTest(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     def test_within_board_returns_true_when_within_board(self):
-        board = ThreeByThreeBoard()
+        board = Board(constants.THREE_BY_THREE)
         position = 0
         expected = True
 
@@ -77,7 +78,7 @@ class ThreeByThreeBoardTest(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     def test_within_board_returns_true_when_given_9(self):
-        board = ThreeByThreeBoard()
+        board = Board(constants.THREE_BY_THREE)
         position = 9
         expected = True
 
@@ -86,7 +87,7 @@ class ThreeByThreeBoardTest(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     def test_within_board_returns_false_when_not_within_board(self):
-        board = ThreeByThreeBoard()
+        board = Board(constants.THREE_BY_THREE)
         position = 55
         expected = False
 
@@ -95,7 +96,7 @@ class ThreeByThreeBoardTest(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     def test_position_taken_retuns_false_when_not_taken(self):
-        board = ThreeByThreeBoard()
+        board = Board(constants.THREE_BY_THREE)
         position = 0
         expected = False
 
@@ -104,7 +105,7 @@ class ThreeByThreeBoardTest(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     def test_position_taken_returns_true_when_taken(self):
-        board = ThreeByThreeBoard()
+        board = Board(constants.THREE_BY_THREE)
         position = 0
         board.spaces[position] = "X"
         expected = True

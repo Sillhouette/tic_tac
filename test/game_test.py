@@ -5,8 +5,8 @@ from unittest.mock import Mock, patch
 from src.game import Game
 from src.cli import Cli
 from src.human_player import HumanPlayer
-from src.three_by_three_board import ThreeByThreeBoard
-from src.three_by_three_processor import ThreeByThreeProcessor
+from src.board import Board
+from src.processor import Processor
 
 class GameTest(unittest.TestCase):
     def create_integrated_game(self):
@@ -18,8 +18,8 @@ class GameTest(unittest.TestCase):
         player_1.token = "X"
         player_2.token = "O"
         players = [player_1, player_2]
-        board = ThreeByThreeBoard()
-        processor = ThreeByThreeProcessor(board)
+        board = Board(constants.THREE_BY_THREE)
+        processor = Processor(board)
         processor.set_players(players)
         game = Game(cli, players, board, processor)
         return game

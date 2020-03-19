@@ -6,15 +6,15 @@ import src.constants as constants
 
 from unittest.mock import Mock
 from src.three_by_three_hard_strategy import ThreeByThreeHardStrategy
-from src.three_by_three_board import ThreeByThreeBoard
-from src.three_by_three_processor import ThreeByThreeProcessor
+from src.board import Board
+from src.processor import Processor
 from src.computer_player import ComputerPlayer
 from src.human_player import HumanPlayer
 
 class ThreeByThreeHardStrategySmokeTest(unittest.TestCase):
     def test_computer_makes_instantaneous_moves_smoke_test(self):
-        board = ThreeByThreeBoard()
-        processor = ThreeByThreeProcessor(board)
+        board = Board(constants.THREE_BY_THREE)
+        processor = Processor(board)
         player_1 = HumanPlayer(Mock(), Mock())
         player_2 = ComputerPlayer(processor, Mock())
         players = [player_1, player_2]
@@ -23,7 +23,7 @@ class ThreeByThreeHardStrategySmokeTest(unittest.TestCase):
         turns_until_algorithm = 2
         num_turns = range(turns_until_algorithm)
         num_times_ran = range(10)
-        expected = 0.5
+        expected = 0.6
         actuals = []
 
         for run in num_times_ran:

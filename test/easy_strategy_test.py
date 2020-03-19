@@ -1,20 +1,21 @@
 import unittest
+import src.constants as constants
 
 from unittest.mock import Mock
-from src.three_by_three_easy_strategy import ThreeByThreeEasyStrategy
+from src.easy_strategy import EasyStrategy
 from src.computer_player import ComputerPlayer
-from src.three_by_three_board import ThreeByThreeBoard
-from src.three_by_three_processor import ThreeByThreeProcessor
+from src.board import Board
+from src.processor import Processor
 
-class ThreeByThreeEasyStrategyTest(unittest.TestCase):
+class EasyStrategyTest(unittest.TestCase):
 
     def test_get_random_move_returns_a_valid_move_every_turn(self):
-        board = ThreeByThreeBoard()
-        processor = ThreeByThreeProcessor(board)
+        board = Board(constants.THREE_BY_THREE)
+        processor = Processor(board)
         cli = Mock()
         minimax = Mock()
         computer = ComputerPlayer(processor, cli, minimax)
-        strat = ThreeByThreeEasyStrategy(processor, computer)
+        strat = EasyStrategy(processor, computer)
         expected = True
 
         for space in board.spaces:
@@ -29,9 +30,10 @@ class ThreeByThreeEasyStrategyTest(unittest.TestCase):
     def test_execute_calls_get_random_move(self):
         processor = Mock()
         computer_player = Mock()
-        strat = ThreeByThreeEasyStrategy(processor, computer_player)
+        strat = EasyStrategy(processor, computer_player)
         strat.get_random_move = Mock()
 
         strat.execute()
 
         strat.get_random_move.assert_called()
+

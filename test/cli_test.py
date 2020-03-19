@@ -3,7 +3,8 @@ import src.constants as constants
 
 from unittest.mock import call, Mock
 from src.cli import Cli
-from src.three_by_three_board import ThreeByThreeBoard
+from src.board import Board
+from src.processor import Processor
 from src.three_by_three_presenter import ThreeByThreePresenter
 
 class CliTest(unittest.TestCase):
@@ -16,12 +17,13 @@ class CliTest(unittest.TestCase):
 
         writer.assert_called_once_with(test_string)
 
-    def test_set_presenter_type_sets_3x3_when_given_3x3_board(self):
-        board_type = constants.THREE_BY_THREE
+    def test_set_dependencies_sets_3x3_board_when_given_processor_with_3x3_board(self):
+        board = Board(constants.THREE_BY_THREE)
+        processor = Processor(board)
         cli = Cli()
         expected = True
 
-        cli.set_presenter_type(board_type)
+        cli.set_dependencies(processor)
         actual = isinstance(cli.presenter, ThreeByThreePresenter)
 
         self.assertEqual(expected, actual)
@@ -49,10 +51,11 @@ class CliTest(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     def test_print_board_3x3(self):
-        board = ThreeByThreeBoard()
+        board = Board(constants.THREE_BY_THREE)
+        processor = Processor(board)
         writer = Mock()
         cli = Cli(writer=writer)
-        cli.set_presenter_type(constants.THREE_BY_THREE)
+        cli.set_dependencies(processor)
         board.spaces = ["X", " ", " ", "O", " ", "X", " ", " ", "O"]
        
         expected = """
@@ -71,10 +74,11 @@ class CliTest(unittest.TestCase):
         writer.assert_called_once_with(expected)
 
     def test_print_empty_3x3_board(self):
-        board = ThreeByThreeBoard()
+        board = Board(constants.THREE_BY_THREE)
+        processor = Processor(board)
         writer = Mock()
         cli = Cli(writer=writer)
-        cli.set_presenter_type(constants.THREE_BY_THREE)
+        cli.set_dependencies(processor)
         colorize = (lambda i: f"{constants.EMPTY_INDEX_COLOR_START}{i}{constants.EMPTY_INDEX_COLOR_END}")
 
         expected =  f"""
@@ -93,10 +97,11 @@ class CliTest(unittest.TestCase):
         writer.assert_called_once_with(expected)
 
     def test_print_3x3_board_in_progress(self):
-        board = ThreeByThreeBoard()
+        board = Board(constants.THREE_BY_THREE)
+        processor = Processor(board)
         writer = Mock()
         cli = Cli(writer=writer)
-        cli.set_presenter_type(constants.THREE_BY_THREE)
+        cli.set_dependencies(processor)
         board.spaces = ["X", None, None, "O", None, "X", None, None, "O"]
         colorize = (lambda i: f"{constants.EMPTY_INDEX_COLOR_START}{i}{constants.EMPTY_INDEX_COLOR_END}")
 
@@ -179,9 +184,12 @@ class CliTest(unittest.TestCase):
 
         self.assertEqual(expected, actual)
 
-    def test_get_board_type_returns_3x3(self):
-        cli = Cli()
-        expected = "3x3"
+    def test_get_board_type_returns_1_when_player_chooses_1(self):
+        reader = Mock()
+        writer = Mock()
+        reader.return_value = "1"
+        cli = Cli(writer, reader)
+        expected = "1"
 
         actual = cli.get_board_type()
 
@@ -189,11 +197,7 @@ class CliTest(unittest.TestCase):
 
     def test_generate_opponent_menu(self):
         cli = Cli()
-        expected = [
-            "  1. Player - Play against another player",
-            f"  2. {constants.COMPUTER_MODES[constants.EASY]}",
-            f"  3. {constants.COMPUTER_MODES[constants.HARD]}"
-        ]
+        expected = f"Choose your opponent:\n  1. {constants.OPPONENTS[constants.PLAYER]}\n  2. {constants.OPPONENTS[constants.EASY]}\n  3. {constants.OPPONENTS[constants.HARD]}\n"
 
         actual = cli.generate_opponent_menu()
 
@@ -203,9 +207,9 @@ class CliTest(unittest.TestCase):
         reader = Mock()
         cli = Cli(reader=reader)
         prompt = "Choose your opponent:\n"
-        player = "  1. Player - Play against another player\n"
-        easy = f"  2. {constants.COMPUTER_MODES[constants.EASY]}\n"
-        hard = f"  3. {constants.COMPUTER_MODES[constants.HARD]}\n"
+        player = f"  1. {constants.OPPONENTS[constants.PLAYER]}\n"
+        easy = f"  2. {constants.OPPONENTS[constants.EASY]}\n"
+        hard = f"  3. {constants.OPPONENTS[constants.HARD]}\n"
         expected = prompt + player + easy + hard
 
         cli.get_opponent()
@@ -244,3 +248,4 @@ class CliTest(unittest.TestCase):
         self.assertEqual(expected, results_has_player_2_key)
         self.assertEqual(expected, results_has_exit_key)
         self.assertEqual(expected, results_has_finished_key)
+

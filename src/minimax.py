@@ -8,10 +8,11 @@ class Minimax():
 
     def execute(self, move, depth, token, next_player_index,
                    alpha=-math.inf, beta=math.inf):
-       self.processor.execute_move(move, token)
-       score = self.score_move(depth, next_player_index, alpha, beta)
-       self.processor.execute_move(move, None)
-       return score
+        self.processor.execute_move(move, token)
+        score = self.score_move(depth, next_player_index, alpha, beta)
+        self.processor.execute_move(move, None)
+
+        return score
     
     def calculate_score(self, result):
         maximizer_token = self.processor.get_player_tokens()[self.maximizer_index]
