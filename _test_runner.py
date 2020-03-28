@@ -43,3 +43,4 @@ if __name__ == '__main__':
 
 # Note: run the tests from the command line with:
 # 'python3 -m unittest _test_runner.py -v'
+# `coverage run _test_runner.py -v -f' for test coverage using coverage
