@@ -6,6 +6,7 @@ from src.cli import Cli
 from src.board import Board
 from src.processor import Processor
 from src.three_by_three_presenter import ThreeByThreePresenter
+from src.three_dimensional_presenter import ThreeDimensionalPresenter
 
 class CliTest(unittest.TestCase):
     def test_log_message_logs_message(self):
@@ -25,6 +26,17 @@ class CliTest(unittest.TestCase):
 
         cli.set_dependencies(processor)
         actual = isinstance(cli.presenter, ThreeByThreePresenter)
+
+        self.assertEqual(expected, actual)
+ 
+    def test_set_dependencies_sets_3d_board_when_given_processor_with_3d_board(self):
+        board = Board(constants.THREE_DIMENSIONAL)
+        processor = Processor(board)
+        cli = Cli()
+        expected = True
+
+        cli.set_dependencies(processor)
+        actual = isinstance(cli.presenter, ThreeDimensionalPresenter)
 
         self.assertEqual(expected, actual)
  
@@ -175,7 +187,15 @@ class CliTest(unittest.TestCase):
 
         writer.assert_called_with(expected)
 
- 
+    def test_invalid_option(self):
+        writer = Mock()
+        cli = Cli(writer=writer)
+        expected = Cli.MESSAGES[constants.OPTION_ERROR] 
+
+        actual = cli.invalid_option()
+
+        writer.assert_called_with(expected)
+
     def test_get_player_tokens_returns_list_of_player_tokens(self):
         cli = Cli()
         expected = ["X", "O"]
@@ -192,6 +212,17 @@ class CliTest(unittest.TestCase):
         expected = "1"
 
         actual = cli.get_board_type()
+
+        self.assertEqual(expected, actual)
+    
+    def test_get_opponent_choice_returns_1_when_player_chooses_1(self):
+        reader = Mock()
+        writer = Mock()
+        reader.return_value = "1"
+        cli = Cli(writer, reader)
+        expected = "1"
+
+        actual = cli.get_opponent_choice()
 
         self.assertEqual(expected, actual)
 

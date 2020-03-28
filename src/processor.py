@@ -6,7 +6,6 @@ class Processor():
         self.set_win_combos()
 
     def set_win_combos(self):
-        print(self.board.type)
         if self.board.type == constants.THREE_BY_THREE:
             self.win_combos = constants.THREE_BY_THREE_WIN_COMBINATIONS
         elif self.board.type == constants.THREE_DIMENSIONAL:
@@ -19,7 +18,7 @@ class Processor():
         return int(move) - 1
 
     def get_valid_moves(self):
-        return [index + 1 for index, space in enumerate(self.board.spaces) if space == None]
+        return [str(index + 1) for index, space in enumerate(self.board.spaces) if space == None]
 
     def get_taken_positions(self):
         return [index for index, space in enumerate(self.board.spaces) if space != None]

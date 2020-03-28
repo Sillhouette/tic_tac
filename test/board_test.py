@@ -4,6 +4,23 @@ import src.constants as constants
 from src.board import Board
 
 class BoardTest(unittest.TestCase):
+    def test_setup_3d_board_sets_size_to_27(self):
+        board = Board(constants.THREE_DIMENSIONAL)
+        expected = 27
+
+        actual = board.size
+
+        self.assertEqual(expected, actual)
+    
+    def test_setup_3x3_board_sets_size_to_9(self):
+        board = Board(constants.THREE_BY_THREE)
+        expected = 9
+
+        actual = board.size
+
+        self.assertEqual(expected, actual)
+
+
     def test_full_board(self):
         board = Board(constants.THREE_BY_THREE)
         board.spaces = ["X", "O", "X", "O", "O", "X", "O", "O", "X"]

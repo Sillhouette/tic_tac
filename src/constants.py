@@ -47,7 +47,7 @@ THREE_DIMENSIONAL_WIN_COMBINATIONS = {
     "Second Second Column": [10, 13, 16],
     "Second Third Column": [11, 14, 17],
     "Second Left to Right Diagonal": [9, 13, 17],
-    "Second Right to Left Diagonal": [11, 13, 16],
+    "Second Right to Left Diagonal": [11, 13, 15],
     "Third Top Row": [18, 19, 20],
     "Third Middle Row": [21, 22, 23],
     "Third Bottom Row": [24, 25, 26],

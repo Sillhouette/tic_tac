@@ -9,11 +9,13 @@ from test.validator_test import ValidatorTest
 from test.app_test import AppTest
 from test.player_builder_test import PlayerBuilderTest
 from test.three_by_three_presenter_test import ThreeByThreePresenterTest
+from test.three_dimensional_presenter_test import ThreeDimensionalPresenterTest
 from test.processor_test import ProcessorTest
 from test.minimax_test import MinimaxTest
 from test.strategy_builder_test import StrategyBuilderTest
 from test.easy_strategy_test import EasyStrategyTest
-from test.three_by_three_hard_strategy_test import ThreeByThreeHardStrategyTest
+from test.hard_strategy_test import HardStrategyTest
+from test.data_gatherer_test import DataGathererTest
 
 def suite():
     suite = unittest.TestSuite()
@@ -30,7 +32,9 @@ def suite():
     suite.addTests(unittest.TestLoader().loadTestsFromTestCase(MinimaxTest))
     suite.addTests(unittest.TestLoader().loadTestsFromTestCase(StrategyBuilderTest))
     suite.addTests(unittest.TestLoader().loadTestsFromTestCase(EasyStrategyTest))
-    suite.addTests(unittest.TestLoader().loadTestsFromTestCase(ThreeByThreeHardStrategyTest))
+    suite.addTests(unittest.TestLoader().loadTestsFromTestCase(HardStrategyTest))
+    suite.addTests(unittest.TestLoader().loadTestsFromTestCase(ThreeDimensionalPresenterTest))
+    suite.addTests(unittest.TestLoader().loadTestsFromTestCase(DataGathererTest))
 
     return suite
 

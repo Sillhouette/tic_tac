@@ -44,8 +44,7 @@ class ThreeByThreePresenterTest(unittest.TestCase):
         actual = presenter.scrub_board(board)
 
         self.assertEqual(expected, actual)
-
-
+    
     def test_present_empty_board(self):
         board = Board(constants.THREE_BY_THREE)
         presenter = ThreeByThreePresenter()

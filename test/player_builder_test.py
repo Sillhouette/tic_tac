@@ -13,6 +13,8 @@ class PlayerBuilderTest(unittest.TestCase):
 
     def test_build_players_builds_list_of_two_human_players(self):
         processor = Mock()
+        processor.board = Mock()
+        processor.board.type = constants.THREE_BY_THREE
         cli = Mock()
         builder = PlayerBuilder(processor, cli)
         choice = "1"
@@ -29,6 +31,8 @@ class PlayerBuilderTest(unittest.TestCase):
 
     def test_build_players_builds_list_of_one_human_one_computer(self):
         processor = Mock()
+        processor.board = Mock()
+        processor.board.type = constants.THREE_BY_THREE
         cli = Mock()
         builder = PlayerBuilder(processor, cli)
         choice = "2"
@@ -47,6 +51,8 @@ class PlayerBuilderTest(unittest.TestCase):
 
     def test_build_players_builds_list_of_human_and_computer(self):
         processor = Mock()
+        processor.board = Mock()
+        processor.board.type = constants.THREE_BY_THREE
         cli = Mock()
         builder = PlayerBuilder(processor, cli)
         choice = "3"

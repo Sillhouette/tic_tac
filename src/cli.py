@@ -1,3 +1,6 @@
+import os
+import platform
+
 import src.constants as constants
 
 from src.three_by_three_presenter import ThreeByThreePresenter
@@ -51,10 +54,17 @@ class Cli():
         self.log(self.MESSAGES[constants.EXIT])
 
     def print_board(self, board):
+        self.clear()
         self.log(self.presenter.present_board(board))
 
     def invalid_move(self):
         self.log(self.MESSAGES[constants.ERROR])
+
+    def clear(self):
+        if platform.system() == "Windows":
+            os.system('cls')
+        else:
+            os.system('clear')
 
     def invalid_option(self):
         self.log(self.MESSAGES[constants.OPTION_ERROR])

@@ -35,7 +35,6 @@ class HumanPlayerTest(unittest.TestCase):
 
         self.assertEqual(player.token, token)
 
-    @unittest.skip("Outdated Test")
     def test_get_move_returns_only_valid_moves(self):
         cli = Mock()
         board = Board(constants.THREE_BY_THREE)
@@ -44,13 +43,8 @@ class HumanPlayerTest(unittest.TestCase):
         moves = ["1", "55", "exit", "gibberish"]
         cli.request_move.side_effect = moves 
         player = Player(cli)
-        expected_list = [
-            [constants.MOVE, moves[0]],
-            [constants.ERROR, moves[1]],
-            [constants.EXIT, None],
-            [constants.ERROR, moves[3]]
-        ]
-
+        expected_list = moves
+            
         actual_list = [
             player.get_move(),
             player.get_move(),
@@ -59,19 +53,14 @@ class HumanPlayerTest(unittest.TestCase):
         ]
         self.assertListEqual(expected_list, actual_list)
 
-    @unittest.skip("Outdated Test")
     def test_get_move_properly_returns_based_on_input(self):
         cli = Mock()
         board = Board(constants.THREE_BY_THREE)
         processor = Processor(board)
         player = Player(cli)
         moves = ["9", "357", "exit", "chuck norris wins"]
-        expected_list = [
-            [constants.MOVE, moves[0]],
-            [constants.ERROR, moves[1]],
-            [constants.EXIT, None],
-            [constants.ERROR, moves[3]]
-        ]
+        cli.request_move.side_effect = moves
+        expected_list = moves
 
         actual_list = []
         for move in moves:

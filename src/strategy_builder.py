@@ -1,6 +1,6 @@
 import src.constants as constants
 
-from src.three_by_three_hard_strategy import ThreeByThreeHardStrategy
+from src.hard_strategy import HardStrategy
 from src.easy_strategy import EasyStrategy
 
 class StrategyBuilder():
@@ -10,6 +10,6 @@ class StrategyBuilder():
 
     def build(self, difficulty):
         if difficulty == constants.HARD:
-            return ThreeByThreeHardStrategy(self.processor, self.computer_player)
+            return HardStrategy(self.processor, self.computer_player)
         elif difficulty == constants.EASY:
             return EasyStrategy(self.processor, self.computer_player)

@@ -175,7 +175,7 @@ class ProcessorTest(unittest.TestCase):
     def test_get_valid_moves_returns_list_of_valid_moves_when_board_empty(self):
         board = Board(constants.THREE_BY_THREE)
         processor = Processor(board)
-        expected = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        expected = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
 
         actual = processor.get_valid_moves()
 
@@ -186,7 +186,7 @@ class ProcessorTest(unittest.TestCase):
         processor = Processor(board)
         board.update(3, "X")
         board.update(4, "O")
-        expected = [1, 2, 3, 6, 7, 8, 9]
+        expected = ['1', '2', '3', '6', '7', '8', '9']
 
         actual = processor.get_valid_moves()
 

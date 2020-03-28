@@ -104,4 +104,3 @@ class AppTest(unittest.TestCase):
 
         self.assertEqual(expected, actual)
 
-
