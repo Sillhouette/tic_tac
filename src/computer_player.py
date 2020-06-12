@@ -10,14 +10,14 @@ class ComputerPlayer():
         self.token = token
         self.processor = processor
         self.cli = cli
-        self.strategy = self.set_strategy(difficulty)
+        self.set_strategy(difficulty)
         
     def set_token(self, token):
         self.token = token
 
     def set_strategy(self, difficulty):
         strategy_builder = StrategyBuilder(self.processor, self)
-        return strategy_builder.build(difficulty)
+        self.strategy = strategy_builder.build(difficulty)
 
     def get_index(self):
         return self.processor.players.index(self)

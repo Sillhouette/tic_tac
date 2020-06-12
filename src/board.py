@@ -1,11 +1,17 @@
 import src.constants as constants
 
-class ThreeByThreeBoard():
+class Board():
 
-    def __init__(self):
-        self.type = constants.THREE_BY_THREE 
-        self.size = 3 * 3
+    def __init__(self, board_type):
+        self.type = board_type
+        self.set_board_size()
         self.spaces = [None] * self.size
+
+    def set_board_size(self):
+        if self.type == constants.THREE_BY_THREE:
+            self.size = 3 * 3
+        elif self.type == constants.THREE_DIMENSIONAL:
+            self.size = 3 * 3 * 3
 
     def turn_count(self):
         return self.size - self.spaces.count(None)

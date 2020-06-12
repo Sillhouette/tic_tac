@@ -2,7 +2,7 @@ import unittest
 import src.constants as constants
 
 from src.three_by_three_presenter import ThreeByThreePresenter
-from src.three_by_three_board import ThreeByThreeBoard
+from src.board import Board
 
 class ThreeByThreePresenterTest(unittest.TestCase):
 
@@ -17,7 +17,7 @@ class ThreeByThreePresenterTest(unittest.TestCase):
 
     def test_scrub_board_returns_properly_scrubbed_empty_board(self):
         presenter = ThreeByThreePresenter()
-        board = ThreeByThreeBoard()
+        board = Board(constants.THREE_BY_THREE)
         expected = []
         for index in list(range(1, 10)):
             expected.append(presenter.colorize_empty_space_index(index))
@@ -28,7 +28,7 @@ class ThreeByThreePresenterTest(unittest.TestCase):
 
     def test_scrub_board_returns_properly_scrubbed_in_progress_board(self):
         presenter = ThreeByThreePresenter()
-        board = ThreeByThreeBoard()
+        board = Board(constants.THREE_BY_THREE)
         moves = [0, 3, 6, 2]
         tokens = ["X", "O", "X", "O"]
         for i, move in enumerate(moves):
@@ -44,10 +44,9 @@ class ThreeByThreePresenterTest(unittest.TestCase):
         actual = presenter.scrub_board(board)
 
         self.assertEqual(expected, actual)
-
-
+    
     def test_present_empty_board(self):
-        board = ThreeByThreeBoard()
+        board = Board(constants.THREE_BY_THREE)
         presenter = ThreeByThreePresenter()
         colorize = (lambda i: f"{constants.EMPTY_INDEX_COLOR_START}{i}{constants.EMPTY_INDEX_COLOR_END}")
 
@@ -67,7 +66,7 @@ class ThreeByThreePresenterTest(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     def test_present_board_in_progress(self):
-        board = ThreeByThreeBoard()
+        board = Board(constants.THREE_BY_THREE)
         presenter = ThreeByThreePresenter()
         board.spaces = ["X", None, None, "O", None, "X", None, None, "O"]
         colorize = (lambda i: f"{constants.EMPTY_INDEX_COLOR_START}{i}{constants.EMPTY_INDEX_COLOR_END}")
